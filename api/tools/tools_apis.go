@@ -5,7 +5,7 @@
 package tools
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 获取ISV发起请求服务器IP */
@@ -185,39 +185,4 @@ type TopatsTaskDeleteResponse struct {
 
 type TopatsTaskDeleteResponseResult struct {
 	Response *TopatsTaskDeleteResponse `json:"topats_task_delete_response"`
-}
-
-/* 用于获取指定时间段内的定时API任务信息。</br>
-条件：1）必须是本APPKEY创建的任务。</br>
-     2)起始时间不能早于3天前的当前时刻。</br>
-     3）结束时间不能晚于一天以后的当前时刻。</br> */
-type TopatsTasksGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 要查询的已经创建的定时任务的结束时间(这里的时间是指执行时间)。 */
-func (r *TopatsTasksGetRequest) SetEndTime(value string) {
-	r.SetValue("end_time", value)
-}
-
-/* 要查询的已创建过的定时任务的开始时间(这里的时间是指执行时间)。 */
-func (r *TopatsTasksGetRequest) SetStartTime(value string) {
-	r.SetValue("start_time", value)
-}
-
-func (r *TopatsTasksGetRequest) GetResponse(accessToken string) (*TopatsTasksGetResponse, []byte, error) {
-	var resp TopatsTasksGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.topats.tasks.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type TopatsTasksGetResponse struct {
-	Tasks []*Task `json:"tasks"`
-}
-
-type TopatsTasksGetResponseResult struct {
-	Response *TopatsTasksGetResponse `json:"topats_tasks_get_response"`
 }

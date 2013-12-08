@@ -4,7 +4,7 @@
 
 package jipiao
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 全量、增量的添加政策压缩包的json对应对象 */
 type BatchPolicy struct {
@@ -88,11 +88,13 @@ type SearchOrderResult struct {
 
 /* 国内机票订单数据结构【top订单优化】 */
 type AtOrder struct {
-	BaseInfo     *BaseInfo      `json:"base_info"`
-	CorpInfo     *CorpInfo      `json:"corp_info"`
-	Extra        string         `json:"extra"`
-	Itinerary    *Itinerary     `json:"itinerary"`
-	SegmentInfos []*SegmentInfo `json:"segment_infos"`
+	BaseInfo     *BaseInfo  `json:"base_info"`
+	CorpInfo     *CorpInfo  `json:"corp_info"`
+	Extra        string     `json:"extra"`
+	Itinerary    *Itinerary `json:"itinerary"`
+	SegmentInfos struct {
+		SegmentInfo []*SegmentInfo `json:"segment_info"`
+	} `json:"segment_infos"`
 }
 
 /* 国内机票，订单基本信息数据结构【top订单优化】 */
@@ -158,37 +160,39 @@ type Itinerary struct {
 
 /* 国内机票航段信息数据结构，【订单优化】 */
 type SegmentInfo struct {
-	AirlineCode               string       `json:"airline_code"`
-	ArrAirportCode            string       `json:"arr_airport_code"`
-	ArrCityCode               string       `json:"arr_city_code"`
-	ArrTime                   string       `json:"arr_time"`
-	BookStatus                int          `json:"book_status"`
-	CabinClass                int          `json:"cabin_class"`
-	CabinCode                 string       `json:"cabin_code"`
-	CabinId                   int          `json:"cabin_id"`
-	Carrier                   string       `json:"carrier"`
-	ChildFee                  int          `json:"child_fee"`
-	ChildInsurePromotionPrice int          `json:"child_insure_promotion_price"`
-	ChildPrice                int          `json:"child_price"`
-	ChildTax                  int          `json:"child_tax"`
-	DepAirportCode            string       `json:"dep_airport_code"`
-	DepCityCode               string       `json:"dep_city_code"`
-	DepTime                   string       `json:"dep_time"`
-	Extra                     string       `json:"extra"`
-	Fee                       int          `json:"fee"`
-	FlightId                  int          `json:"flight_id"`
-	FlightNo                  string       `json:"flight_no"`
-	FlightType                string       `json:"flight_type"`
-	InsurePromotionPrice      int          `json:"insure_promotion_price"`
-	Memo                      string       `json:"memo"`
-	Passengers                []*Passerger `json:"passengers"`
-	PolicyId                  int          `json:"policy_id"`
-	PolicyType                int          `json:"policy_type"`
-	Price                     int          `json:"price"`
-	SegmentType               int          `json:"segment_type"`
-	SpecialRule               string       `json:"special_rule"`
-	Tax                       int          `json:"tax"`
-	TicketPrice               int          `json:"ticket_price"`
+	AirlineCode               string `json:"airline_code"`
+	ArrAirportCode            string `json:"arr_airport_code"`
+	ArrCityCode               string `json:"arr_city_code"`
+	ArrTime                   string `json:"arr_time"`
+	BookStatus                int    `json:"book_status"`
+	CabinClass                int    `json:"cabin_class"`
+	CabinCode                 string `json:"cabin_code"`
+	CabinId                   int    `json:"cabin_id"`
+	Carrier                   string `json:"carrier"`
+	ChildFee                  int    `json:"child_fee"`
+	ChildInsurePromotionPrice int    `json:"child_insure_promotion_price"`
+	ChildPrice                int    `json:"child_price"`
+	ChildTax                  int    `json:"child_tax"`
+	DepAirportCode            string `json:"dep_airport_code"`
+	DepCityCode               string `json:"dep_city_code"`
+	DepTime                   string `json:"dep_time"`
+	Extra                     string `json:"extra"`
+	Fee                       int    `json:"fee"`
+	FlightId                  int    `json:"flight_id"`
+	FlightNo                  string `json:"flight_no"`
+	FlightType                string `json:"flight_type"`
+	InsurePromotionPrice      int    `json:"insure_promotion_price"`
+	Memo                      string `json:"memo"`
+	Passengers                struct {
+		Passerger []*Passerger `json:"passerger"`
+	}                  `json:"passengers"`
+	PolicyId    int    `json:"policy_id"`
+	PolicyType  int    `json:"policy_type"`
+	Price       int    `json:"price"`
+	SegmentType int    `json:"segment_type"`
+	SpecialRule string `json:"special_rule"`
+	Tax         int    `json:"tax"`
+	TicketPrice int    `json:"ticket_price"`
 }
 
 /* 国内机票乘机人信息数据结构【top订单优化】 */

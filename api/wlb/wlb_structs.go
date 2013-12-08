@@ -4,7 +4,7 @@
 
 package wlb
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 库存明细 */
 type IpcInventoryDetailDo struct {
@@ -62,10 +62,14 @@ type WlbAuthorization struct {
 
 /* 商品的库存信息和批次信息 */
 type WlbItemBatchInventory struct {
-	ItemBatch      []*WlbItemBatch     `json:"item_batch"`
-	ItemId         int                 `json:"item_id"`
-	ItemInventorys []*WlbItemInventory `json:"item_inventorys"`
-	TotalQuantity  int                 `json:"total_quantity"`
+	ItemBatch struct {
+		WlbItemBatch []*WlbItemBatch `json:"wlb_item_batch"`
+	}                  `json:"item_batch"`
+	ItemId         int `json:"item_id"`
+	ItemInventorys struct {
+		WlbItemInventory []*WlbItemInventory `json:"wlb_item_inventory"`
+	}                 `json:"item_inventorys"`
+	TotalQuantity int `json:"total_quantity"`
 }
 
 /* 批次库存查询结果记录 */
@@ -219,12 +223,35 @@ type WlbOrder struct {
 	UserNick          string `json:"user_nick"`
 }
 
+/* 物流宝订单，并且包含订单详情 */
+type WlbOrderDetail struct {
+	BuyerNick     string `json:"buyer_nick"`
+	CreateTime    string `json:"create_time"`
+	IsCompleted   bool   `json:"is_completed"`
+	ModifyTime    string `json:"modify_time"`
+	OperateType   string `json:"operate_type"`
+	OrderCode     string `json:"order_code"`
+	OrderItemList struct {
+		WlbOrderItem []*WlbOrderItem `json:"wlb_order_item"`
+	}                      `json:"order_item_list"`
+	OrderSource     string `json:"order_source"`
+	OrderSourceCode string `json:"order_source_code"`
+	OrderStatus     string `json:"order_status"`
+	OrderSubType    string `json:"order_sub_type"`
+	OrderType       string `json:"order_type"`
+	Remark          string `json:"remark"`
+	StoreCode       string `json:"store_code"`
+	UserId          int    `json:"user_id"`
+	UserNick        string `json:"user_nick"`
+}
+
 /* 物流宝订单商品 */
 type WlbOrderItem struct {
 	BatchRemark    string `json:"batch_remark"`
 	ConfirmStatus  string `json:"confirm_status"`
 	ExtEntityId    string `json:"ext_entity_id"`
 	ExtEntityType  string `json:"ext_entity_type"`
+	Flag           int    `json:"flag"`
 	Id             int    `json:"id"`
 	InventoryType  string `json:"inventory_type"`
 	ItemCode       string `json:"item_code"`

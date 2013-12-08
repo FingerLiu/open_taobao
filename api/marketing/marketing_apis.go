@@ -5,10 +5,10 @@
 package marketing
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
-/* 商品优惠详情查询，可查询商品设置的详细优惠。包括限时折扣，满就送等官方优惠以及第三方优惠。此接口有调用频率限制请酌情使用，建议使用淘客API获取商品折扣价格。 */
+/* 商品优惠详情查询，可查询商品设置的详细优惠。包括限时折扣，满就送等官方优惠以及第三方优惠。 */
 type UmpPromotionGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -107,39 +107,14 @@ func (r *MarketingPromotionsGetRequest) GetResponse(accessToken string) (*Market
 }
 
 type MarketingPromotionsGetResponse struct {
-	Promotions   []*Promotion `json:"promotions"`
-	TotalResults int          `json:"total_results"`
+	Promotions struct {
+		Promotion []*Promotion `json:"promotion"`
+	}                `json:"promotions"`
+	TotalResults int `json:"total_results"`
 }
 
 type MarketingPromotionsGetResponseResult struct {
 	Response *MarketingPromotionsGetResponse `json:"marketing_promotions_get_response"`
-}
-
-/* 查询人群标签，返回卖家创建的全部人群标签（有效的） */
-type MarketingTagsGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 需要的返回字段，可选值为UserTag中所有字段 */
-func (r *MarketingTagsGetRequest) SetFields(value string) {
-	r.SetValue("fields", value)
-}
-
-func (r *MarketingTagsGetRequest) GetResponse(accessToken string) (*MarketingTagsGetResponse, []byte, error) {
-	var resp MarketingTagsGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.marketing.tags.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type MarketingTagsGetResponse struct {
-	UserTags []*UserTag `json:"user_tags"`
-}
-
-type MarketingTagsGetResponseResult struct {
-	Response *MarketingTagsGetResponse `json:"marketing_tags_get_response"`
 }
 
 /* 创建某个卖家的店铺优惠券领取活动。返回，优惠券领取活动ID，优惠券领取链接。 */
@@ -263,14 +238,16 @@ func (r *PromotionActivityGetRequest) GetResponse(accessToken string) (*Promotio
 }
 
 type PromotionActivityGetResponse struct {
-	Activitys []*Activity `json:"activitys"`
+	Activitys struct {
+		Activity []*Activity `json:"activity"`
+	} `json:"activitys"`
 }
 
 type PromotionActivityGetResponseResult struct {
 	Response *PromotionActivityGetResponse `json:"promotion_activity_get_response"`
 }
 
-/* 创建店铺优惠券。有效期内的店铺优惠券总数量不超过200张 */
+/* 创建店铺优惠券。有效期内的店铺优惠券总数量不超过50张 */
 type PromotionCouponAddRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -337,9 +314,13 @@ func (r *PromotionCouponSendRequest) GetResponse(accessToken string) (*Promotion
 }
 
 type PromotionCouponSendResponse struct {
-	CouponResults []*CouponResult `json:"coupon_results"`
-	FailureBuyers []*ErrorMessage `json:"failure_buyers"`
-	IsSuccess     bool            `json:"is_success"`
+	CouponResults struct {
+		CouponResult []*CouponResult `json:"coupon_result"`
+	}             `json:"coupon_results"`
+	FailureBuyers struct {
+		ErrorMessage []*ErrorMessage `json:"error_message"`
+	}              `json:"failure_buyers"`
+	IsSuccess bool `json:"is_success"`
 }
 
 type PromotionCouponSendResponseResult struct {
@@ -394,7 +375,12 @@ func (r *PromotionCoupondetailGetRequest) SetCouponId(value string) {
 	r.SetValue("coupon_id", value)
 }
 
-/* 传入优惠券截止时间，即失效时间。查询输入日期向前15天的数据；不传则查询当前日期向前15天的数据。比如查询明天才失效的优惠卷，要传入明天之后15天内的日期，才能查询到该优惠卷。 */
+/* 查N天内的数据，N<=15 */
+func (r *PromotionCoupondetailGetRequest) SetDays(value string) {
+	r.SetValue("days", value)
+}
+
+/* 传入优惠券截止时间，即失效时间。查询输入日期向前1天的数据；不传则查询当前日期向前1天的数据。比如查询明天才失效的优惠卷，要传入明天之后1天内的日期，才能查询到该优惠卷。 */
 func (r *PromotionCoupondetailGetRequest) SetEndTime(value string) {
 	r.SetValue("end_time", value)
 }
@@ -405,7 +391,7 @@ func (r *PromotionCoupondetailGetRequest) SetExtendParams(value string) {
 	r.SetValue("extend_params", value)
 }
 
-/* 查询的页号，结果集是分页返回的，每页20条 */
+/* 查询的页号，结果集是分页返回的，每页20-100条 */
 func (r *PromotionCoupondetailGetRequest) SetPageNo(value string) {
 	r.SetValue("page_no", value)
 }
@@ -430,9 +416,11 @@ func (r *PromotionCoupondetailGetRequest) GetResponse(accessToken string) (*Prom
 }
 
 type PromotionCoupondetailGetResponse struct {
-	CouponDetails  []*CouponDetail `json:"coupon_details"`
-	IsHaveNextPage bool            `json:"is_have_next_page"`
-	TotalResults   int             `json:"total_results"`
+	CouponDetails struct {
+		CouponDetail []*CouponDetail `json:"coupon_detail"`
+	}                   `json:"coupon_details"`
+	IsHaveNextPage bool `json:"is_have_next_page"`
+	TotalResults   int  `json:"total_results"`
 }
 
 type PromotionCoupondetailGetResponseResult struct {
@@ -479,8 +467,10 @@ func (r *PromotionCouponsGetRequest) GetResponse(accessToken string) (*Promotion
 }
 
 type PromotionCouponsGetResponse struct {
-	Coupons      []*Coupon `json:"coupons"`
-	TotalResults int       `json:"total_results"`
+	Coupons struct {
+		Coupon []*Coupon `json:"coupon"`
+	}                `json:"coupons"`
+	TotalResults int `json:"total_results"`
 }
 
 type PromotionCouponsGetResponseResult struct {
@@ -507,7 +497,9 @@ func (r *PromotionLimitdiscountDetailGetRequest) GetResponse(accessToken string)
 }
 
 type PromotionLimitdiscountDetailGetResponse struct {
-	ItemDiscountDetailList []*LimitDiscountDetail `json:"item_discount_detail_list"`
+	ItemDiscountDetailList struct {
+		LimitDiscountDetail []*LimitDiscountDetail `json:"limit_discount_detail"`
+	} `json:"item_discount_detail_list"`
 }
 
 type PromotionLimitdiscountDetailGetResponseResult struct {
@@ -554,8 +546,10 @@ func (r *PromotionLimitdiscountGetRequest) GetResponse(accessToken string) (*Pro
 }
 
 type PromotionLimitdiscountGetResponse struct {
-	LimitDiscountList []*LimitDiscount `json:"limit_discount_list"`
-	TotalCount        int              `json:"total_count"`
+	LimitDiscountList struct {
+		LimitDiscount []*LimitDiscount `json:"limit_discount"`
+	}              `json:"limit_discount_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type PromotionLimitdiscountGetResponseResult struct {
@@ -587,7 +581,9 @@ func (r *PromotionMealGetRequest) GetResponse(accessToken string) (*PromotionMea
 }
 
 type PromotionMealGetResponse struct {
-	MealList []*Meal `json:"meal_list"`
+	MealList struct {
+		Meal []*Meal `json:"meal"`
+	} `json:"meal_list"`
 }
 
 type PromotionMealGetResponseResult struct {
@@ -1169,7 +1165,9 @@ func (r *UmpRangeGetRequest) GetResponse(accessToken string) (*UmpRangeGetRespon
 }
 
 type UmpRangeGetResponse struct {
-	Ranges []*Range `json:"ranges"`
+	Ranges struct {
+		Range []*Range `json:"range"`
+	} `json:"ranges"`
 }
 
 type UmpRangeGetResponseResult struct {

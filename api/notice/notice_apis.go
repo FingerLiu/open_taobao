@@ -5,7 +5,7 @@
 package notice
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 获取一个appkey的哪些用户丢失了消息 */
@@ -48,7 +48,9 @@ func (r *CometDiscardinfoGetRequest) GetResponse(accessToken string) (*CometDisc
 }
 
 type CometDiscardinfoGetResponse struct {
-	DiscardInfoList []*DiscardInfo `json:"discard_info_list"`
+	DiscardInfoList struct {
+		DiscardInfo []*DiscardInfo `json:"discard_info"`
+	} `json:"discard_info_list"`
 }
 
 type CometDiscardinfoGetResponseResult struct {
@@ -187,7 +189,7 @@ type IncrementCustomerStopResponseResult struct {
 	Response *IncrementCustomerStopResponse `json:"increment_customer_stop_response"`
 }
 
-/* 提供查询应用为自身用户所开通的增量消息服务信息。 */
+/* 提供查询应用为自身用户所开通的增量消息服务信息。这个接口有性能问题,服务端有流量限制。在丢消息后，不要每次都调用这个api获取用户列表，应用可自己保存一份主动通知用户名单。 */
 type IncrementCustomersGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -227,8 +229,10 @@ func (r *IncrementCustomersGetRequest) GetResponse(accessToken string) (*Increme
 }
 
 type IncrementCustomersGetResponse struct {
-	AppCustomers []*AppCustomer `json:"app_customers"`
-	TotalResults int            `json:"total_results"`
+	AppCustomers struct {
+		AppCustomer []*AppCustomer `json:"app_customer"`
+	}                `json:"app_customers"`
+	TotalResults int `json:"total_results"`
 }
 
 type IncrementCustomersGetResponseResult struct {
@@ -297,8 +301,10 @@ func (r *IncrementItemsGetRequest) GetResponse(accessToken string) (*IncrementIt
 }
 
 type IncrementItemsGetResponse struct {
-	NotifyItems  []*NotifyItem `json:"notify_items"`
-	TotalResults int           `json:"total_results"`
+	NotifyItems struct {
+		NotifyItem []*NotifyItem `json:"notify_item"`
+	}                `json:"notify_items"`
+	TotalResults int `json:"total_results"`
 }
 
 type IncrementItemsGetResponseResult struct {
@@ -353,8 +359,10 @@ func (r *IncrementRefundsGetRequest) GetResponse(accessToken string) (*Increment
 }
 
 type IncrementRefundsGetResponse struct {
-	NotifyRefunds []*NotifyRefund `json:"notify_refunds"`
-	TotalResults  int             `json:"total_results"`
+	NotifyRefunds struct {
+		NotifyRefund []*NotifyRefund `json:"notify_refund"`
+	}                `json:"notify_refunds"`
+	TotalResults int `json:"total_results"`
 }
 
 type IncrementRefundsGetResponseResult struct {
@@ -442,8 +450,10 @@ func (r *IncrementTradesGetRequest) GetResponse(accessToken string) (*IncrementT
 }
 
 type IncrementTradesGetResponse struct {
-	NotifyTrades []*NotifyTrade `json:"notify_trades"`
-	TotalResults int            `json:"total_results"`
+	NotifyTrades struct {
+		NotifyTrade []*NotifyTrade `json:"notify_trade"`
+	}                `json:"notify_trades"`
+	TotalResults int `json:"total_results"`
 }
 
 type IncrementTradesGetResponseResult struct {

@@ -5,7 +5,7 @@
 package dmt
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 同一卖家最多添加500个图片分类，图片分类名称长度最大为20个字符 */
@@ -82,7 +82,9 @@ func (r *PictureCategoryGetRequest) GetResponse(accessToken string) (*PictureCat
 }
 
 type PictureCategoryGetResponse struct {
-	PictureCategories []*PictureCategory `json:"picture_categories"`
+	PictureCategories struct {
+		PictureCategory []*PictureCategory `json:"picture_category"`
+	} `json:"picture_categories"`
 }
 
 type PictureCategoryGetResponseResult struct {
@@ -158,6 +160,12 @@ type PictureGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
 
+/* 图片使用，如果是pc宝贝detail使用，设置为client:computer，查询出来的图片是符合pc的宝贝detail显示的
+如果是手机宝贝detail使用，设置为client:phone，查询出来的图片是符合手机的宝贝detail显示的 */
+func (r *PictureGetRequest) SetClientType(value string) {
+	r.SetValue("client_type", value)
+}
+
 /* 是否删除,unfroze代表没有删除 */
 func (r *PictureGetRequest) SetDeleted(value string) {
 	r.SetValue("deleted", value)
@@ -208,6 +216,11 @@ func (r *PictureGetRequest) SetTitle(value string) {
 	r.SetValue("title", value)
 }
 
+/* 图片url查询接口 */
+func (r *PictureGetRequest) SetUrls(value string) {
+	r.SetValue("urls", value)
+}
+
 func (r *PictureGetRequest) GetResponse(accessToken string) (*PictureGetResponse, []byte, error) {
 	var resp PictureGetResponseResult
 	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.picture.get", &resp)
@@ -218,8 +231,10 @@ func (r *PictureGetRequest) GetResponse(accessToken string) (*PictureGetResponse
 }
 
 type PictureGetResponse struct {
-	Pictures     []*Picture `json:"pictures"`
-	TotalResults int        `json:"totalResults"`
+	Pictures struct {
+		Picture []*Picture `json:"picture"`
+	}                `json:"pictures"`
+	TotalResults int `json:"totalResults"`
 }
 
 type PictureGetResponseResult struct {
@@ -320,6 +335,13 @@ type PictureUpdateResponseResult struct {
 /* 上传单张图片 */
 type PictureUploadRequest struct {
 	open_taobao.TaobaoMethodRequest
+}
+
+/* 图片上传的来源，有电脑版本宝贝发布，手机版本宝贝发布
+client:computer电脑版本宝贝使用
+client:phone手机版本宝贝使用 */
+func (r *PictureUploadRequest) SetClientType(value string) {
+	r.SetValue("client_type", value)
 }
 
 /* 包括后缀名的图片标题,不能为空，如Bule.jpg,有些卖家希望图片上传后取图片文件的默认名 */

@@ -5,7 +5,7 @@
 package simba
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 获取实时余额，”元”为单位 */
@@ -112,7 +112,9 @@ func (r *SimbaAdgroupAdgroupcatmatchsGetRequest) GetResponse(accessToken string)
 }
 
 type SimbaAdgroupAdgroupcatmatchsGetResponse struct {
-	AdgroupCatmatchList []*ADGroupCatmatch `json:"adgroup_catmatch_list"`
+	AdgroupCatmatchList struct {
+		ADGroupCatmatch []*ADGroupCatmatch `json:"a_d_group_catmatch"`
+	} `json:"adgroup_catmatch_list"`
 }
 
 type SimbaAdgroupAdgroupcatmatchsGetResponseResult struct {
@@ -430,7 +432,9 @@ func (r *SimbaAdgroupNonsearchpricesUpdateRequest) GetResponse(accessToken strin
 }
 
 type SimbaAdgroupNonsearchpricesUpdateResponse struct {
-	AdgroupList []*ADGroup `json:"adgroup_list"`
+	AdgroupList struct {
+		ADGroup []*ADGroup `json:"a_d_group"`
+	} `json:"adgroup_list"`
 }
 
 type SimbaAdgroupNonsearchpricesUpdateResponseResult struct {
@@ -467,7 +471,9 @@ func (r *SimbaAdgroupNonsearchstatesUpdateRequest) GetResponse(accessToken strin
 }
 
 type SimbaAdgroupNonsearchstatesUpdateResponse struct {
-	AdgroupList []*ADGroup `json:"adgroup_list"`
+	AdgroupList struct {
+		ADGroup []*ADGroup `json:"a_d_group"`
+	} `json:"adgroup_list"`
 }
 
 type SimbaAdgroupNonsearchstatesUpdateResponseResult struct {
@@ -936,7 +942,9 @@ func (r *SimbaCampaignAreaoptionsGetRequest) GetResponse(accessToken string) (*S
 }
 
 type SimbaCampaignAreaoptionsGetResponse struct {
-	AreaOptions []*AreaOption `json:"area_options"`
+	AreaOptions struct {
+		AreaOption []*AreaOption `json:"area_option"`
+	} `json:"area_options"`
 }
 
 type SimbaCampaignAreaoptionsGetResponseResult struct {
@@ -1032,7 +1040,9 @@ func (r *SimbaCampaignChanneloptionsGetRequest) GetResponse(accessToken string) 
 }
 
 type SimbaCampaignChanneloptionsGetResponse struct {
-	ChannelOptions []*ChannelOption `json:"channel_options"`
+	ChannelOptions struct {
+		ChannelOption []*ChannelOption `json:"channel_option"`
+	} `json:"channel_options"`
 }
 
 type SimbaCampaignChanneloptionsGetResponseResult struct {
@@ -1207,7 +1217,7 @@ func (r *SimbaCampaignUpdateRequest) SetOnlineStatus(value string) {
 	r.SetValue("online_status", value)
 }
 
-/* 推广计划名称，不能多余20个字符，不能和客户其他推广计划同名。 */
+/* 推广计划名称，不能多余40个字符，不能和客户其他推广计划同名。 */
 func (r *SimbaCampaignUpdateRequest) SetTitle(value string) {
 	r.SetValue("title", value)
 }
@@ -1249,7 +1259,9 @@ func (r *SimbaCampaignsGetRequest) GetResponse(accessToken string) (*SimbaCampai
 }
 
 type SimbaCampaignsGetResponse struct {
-	Campaigns []*Campaign `json:"campaigns"`
+	Campaigns struct {
+		Campaign []*Campaign `json:"campaign"`
+	} `json:"campaigns"`
 }
 
 type SimbaCampaignsGetResponseResult struct {
@@ -1618,7 +1630,9 @@ func (r *SimbaCreativesGetRequest) GetResponse(accessToken string) (*SimbaCreati
 }
 
 type SimbaCreativesGetResponse struct {
-	Creatives []*Creative `json:"creatives"`
+	Creatives struct {
+		Creative []*Creative `json:"creative"`
+	} `json:"creatives"`
 }
 
 type SimbaCreativesGetResponseResult struct {
@@ -1650,7 +1664,9 @@ func (r *SimbaCreativesRecordGetRequest) GetResponse(accessToken string) (*Simba
 }
 
 type SimbaCreativesRecordGetResponse struct {
-	Creativerecords []*CreativeRecord `json:"creativerecords"`
+	Creativerecords struct {
+		CreativeRecord []*CreativeRecord `json:"creative_record"`
+	} `json:"creativerecords"`
 }
 
 type SimbaCreativesRecordGetResponseResult struct {
@@ -1704,7 +1720,9 @@ func (r *SimbaInsightCatsGetRequest) GetResponse(accessToken string) (*SimbaInsi
 }
 
 type SimbaInsightCatsGetResponse struct {
-	InCategoryTops []*INCategoryTop `json:"in_category_tops"`
+	InCategoryTops struct {
+		INCategoryTop []*INCategoryTop `json:"i_n_category_top"`
+	} `json:"in_category_tops"`
 }
 
 type SimbaInsightCatsGetResponseResult struct {
@@ -1745,7 +1763,9 @@ func (r *SimbaInsightCatsanalysisGetRequest) GetResponse(accessToken string) (*S
 }
 
 type SimbaInsightCatsanalysisGetResponse struct {
-	InCategoryAnalyses []*INCategoryAnalysis `json:"in_category_analyses"`
+	InCategoryAnalyses struct {
+		INCategoryAnalysis []*INCategoryAnalysis `json:"i_n_category_analysis"`
+	} `json:"in_category_analyses"`
 }
 
 type SimbaInsightCatsanalysisGetResponseResult struct {
@@ -1787,7 +1807,9 @@ func (r *SimbaInsightCatsbaseGetRequest) GetResponse(accessToken string) (*Simba
 }
 
 type SimbaInsightCatsbaseGetResponse struct {
-	InCategoryBases []*INCategoryBase `json:"in_category_bases"`
+	InCategoryBases struct {
+		INCategoryBase []*INCategoryBase `json:"i_n_category_base"`
+	} `json:"in_category_bases"`
 }
 
 type SimbaInsightCatsbaseGetResponseResult struct {
@@ -1819,7 +1841,9 @@ func (r *SimbaInsightCatsforecastGetRequest) GetResponse(accessToken string) (*S
 }
 
 type SimbaInsightCatsforecastGetResponse struct {
-	InCategoryTops []*INCategoryTop `json:"in_category_tops"`
+	InCategoryTops struct {
+		INCategoryTop []*INCategoryTop `json:"i_n_category_top"`
+	} `json:"in_category_tops"`
 }
 
 type SimbaInsightCatsforecastGetResponseResult struct {
@@ -1920,7 +1944,9 @@ func (r *SimbaInsightToplevelcatsGetRequest) GetResponse(accessToken string) (*S
 }
 
 type SimbaInsightToplevelcatsGetResponse struct {
-	InCategoryTops []*INCategoryTop `json:"in_category_tops"`
+	InCategoryTops struct {
+		INCategoryTop []*INCategoryTop `json:"i_n_category_top"`
+	} `json:"in_category_tops"`
 }
 
 type SimbaInsightToplevelcatsGetResponseResult struct {
@@ -1961,7 +1987,9 @@ func (r *SimbaInsightWordsanalysisGetRequest) GetResponse(accessToken string) (*
 }
 
 type SimbaInsightWordsanalysisGetResponse struct {
-	InWordAnalyses []*INWordAnalysis `json:"in_word_analyses"`
+	InWordAnalyses struct {
+		INWordAnalysis []*INWordAnalysis `json:"i_n_word_analysis"`
+	} `json:"in_word_analyses"`
 }
 
 type SimbaInsightWordsanalysisGetResponseResult struct {
@@ -2003,7 +2031,9 @@ func (r *SimbaInsightWordsbaseGetRequest) GetResponse(accessToken string) (*Simb
 }
 
 type SimbaInsightWordsbaseGetResponse struct {
-	InWordBases []*INWordBase `json:"in_word_bases"`
+	InWordBases struct {
+		INWordBase []*INWordBase `json:"i_n_word_base"`
+	} `json:"in_word_bases"`
 }
 
 type SimbaInsightWordsbaseGetResponseResult struct {
@@ -2041,7 +2071,9 @@ func (r *SimbaInsightWordscatsGetRequest) GetResponse(accessToken string) (*Simb
 }
 
 type SimbaInsightWordscatsGetResponse struct {
-	InWordCategories []*INWordCategory `json:"in_word_categories"`
+	InWordCategories struct {
+		INWordCategory []*INWordCategory `json:"i_n_word_category"`
+	} `json:"in_word_categories"`
 }
 
 type SimbaInsightWordscatsGetResponseResult struct {
@@ -2241,7 +2273,9 @@ func (r *SimbaKeywordsDeleteRequest) GetResponse(accessToken string) (*SimbaKeyw
 }
 
 type SimbaKeywordsDeleteResponse struct {
-	Keywords []*Keyword `json:"keywords"`
+	Keywords struct {
+		Keyword []*Keyword `json:"keyword"`
+	} `json:"keywords"`
 }
 
 type SimbaKeywordsDeleteResponseResult struct {
@@ -2273,7 +2307,9 @@ func (r *SimbaKeywordsPricevonSetRequest) GetResponse(accessToken string) (*Simb
 }
 
 type SimbaKeywordsPricevonSetResponse struct {
-	Keywords []*Keyword `json:"keywords"`
+	Keywords struct {
+		Keyword []*Keyword `json:"keyword"`
+	} `json:"keywords"`
 }
 
 type SimbaKeywordsPricevonSetResponseResult struct {
@@ -2305,7 +2341,9 @@ func (r *SimbaKeywordsQscoreGetRequest) GetResponse(accessToken string) (*SimbaK
 }
 
 type SimbaKeywordsQscoreGetResponse struct {
-	KeywordQscoreList []*KeywordQscore `json:"keyword_qscore_list"`
+	KeywordQscoreList struct {
+		KeywordQscore []*KeywordQscore `json:"keyword_qscore"`
+	} `json:"keyword_qscore_list"`
 }
 
 type SimbaKeywordsQscoreGetResponseResult struct {
@@ -2399,7 +2437,9 @@ func (r *SimbaKeywordsbyadgroupidGetRequest) GetResponse(accessToken string) (*S
 }
 
 type SimbaKeywordsbyadgroupidGetResponse struct {
-	Keywords []*Keyword `json:"keywords"`
+	Keywords struct {
+		Keyword []*Keyword `json:"keyword"`
+	} `json:"keywords"`
 }
 
 type SimbaKeywordsbyadgroupidGetResponseResult struct {
@@ -2431,7 +2471,9 @@ func (r *SimbaKeywordsbykeywordidsGetRequest) GetResponse(accessToken string) (*
 }
 
 type SimbaKeywordsbykeywordidsGetResponse struct {
-	Keywords []*Keyword `json:"keywords"`
+	Keywords struct {
+		Keyword []*Keyword `json:"keyword"`
+	} `json:"keywords"`
 }
 
 type SimbaKeywordsbykeywordidsGetResponseResult struct {
@@ -2500,7 +2542,9 @@ func (r *SimbaKeywordsvonAddRequest) GetResponse(accessToken string) (*SimbaKeyw
 }
 
 type SimbaKeywordsvonAddResponse struct {
-	Keywords []*Keyword `json:"keywords"`
+	Keywords struct {
+		Keyword []*Keyword `json:"keyword"`
+	} `json:"keywords"`
 }
 
 type SimbaKeywordsvonAddResponseResult struct {
@@ -2564,7 +2608,9 @@ func (r *SimbaNonsearchAdgroupplacesAddRequest) GetResponse(accessToken string) 
 }
 
 type SimbaNonsearchAdgroupplacesAddResponse struct {
-	AdgroupPlaceList []*ADGroupPlace `json:"adgroup_place_list"`
+	AdgroupPlaceList struct {
+		ADGroupPlace []*ADGroupPlace `json:"a_d_group_place"`
+	} `json:"adgroup_place_list"`
 }
 
 type SimbaNonsearchAdgroupplacesAddResponseResult struct {
@@ -2601,7 +2647,9 @@ func (r *SimbaNonsearchAdgroupplacesDeleteRequest) GetResponse(accessToken strin
 }
 
 type SimbaNonsearchAdgroupplacesDeleteResponse struct {
-	AdgroupPlaceList []*ADGroupPlace `json:"adgroup_place_list"`
+	AdgroupPlaceList struct {
+		ADGroupPlace []*ADGroupPlace `json:"a_d_group_place"`
+	} `json:"adgroup_place_list"`
 }
 
 type SimbaNonsearchAdgroupplacesDeleteResponseResult struct {
@@ -2638,7 +2686,9 @@ func (r *SimbaNonsearchAdgroupplacesGetRequest) GetResponse(accessToken string) 
 }
 
 type SimbaNonsearchAdgroupplacesGetResponse struct {
-	AdgroupPlaceList []*ADGroupPlace `json:"adgroup_place_list"`
+	AdgroupPlaceList struct {
+		ADGroupPlace []*ADGroupPlace `json:"a_d_group_place"`
+	} `json:"adgroup_place_list"`
 }
 
 type SimbaNonsearchAdgroupplacesGetResponseResult struct {
@@ -2676,7 +2726,9 @@ func (r *SimbaNonsearchAdgroupplacesUpdateRequest) GetResponse(accessToken strin
 }
 
 type SimbaNonsearchAdgroupplacesUpdateResponse struct {
-	AdgroupPlaceList []*ADGroupPlace `json:"adgroup_place_list"`
+	AdgroupPlaceList struct {
+		ADGroupPlace []*ADGroupPlace `json:"a_d_group_place"`
+	} `json:"adgroup_place_list"`
 }
 
 type SimbaNonsearchAdgroupplacesUpdateResponseResult struct {
@@ -2698,7 +2750,9 @@ func (r *SimbaNonsearchAlldemographicsGetRequest) GetResponse(accessToken string
 }
 
 type SimbaNonsearchAlldemographicsGetResponse struct {
-	DemographicList []*Demographic `json:"demographic_list"`
+	DemographicList struct {
+		Demographic []*Demographic `json:"demographic"`
+	} `json:"demographic_list"`
 }
 
 type SimbaNonsearchAlldemographicsGetResponseResult struct {
@@ -2720,7 +2774,9 @@ func (r *SimbaNonsearchAllplacesGetRequest) GetResponse(accessToken string) (*Si
 }
 
 type SimbaNonsearchAllplacesGetResponse struct {
-	PlaceList []*Place `json:"place_list"`
+	PlaceList struct {
+		Place []*Place `json:"place"`
+	} `json:"place_list"`
 }
 
 type SimbaNonsearchAllplacesGetResponseResult struct {
@@ -2752,7 +2808,9 @@ func (r *SimbaNonsearchDemographicsGetRequest) GetResponse(accessToken string) (
 }
 
 type SimbaNonsearchDemographicsGetResponse struct {
-	DemographicSettingList []*DemographicSetting `json:"demographic_setting_list"`
+	DemographicSettingList struct {
+		DemographicSetting []*DemographicSetting `json:"demographic_setting"`
+	} `json:"demographic_setting_list"`
 }
 
 type SimbaNonsearchDemographicsGetResponseResult struct {
@@ -2790,7 +2848,9 @@ func (r *SimbaNonsearchDemographicsUpdateRequest) GetResponse(accessToken string
 }
 
 type SimbaNonsearchDemographicsUpdateResponse struct {
-	DemographicSettingList []*DemographicSetting `json:"demographic_setting_list"`
+	DemographicSettingList struct {
+		DemographicSetting []*DemographicSetting `json:"demographic_setting"`
+	} `json:"demographic_setting_list"`
 }
 
 type SimbaNonsearchDemographicsUpdateResponseResult struct {
@@ -3882,7 +3942,9 @@ func (r *SimbaToolsItemsTopGetRequest) GetResponse(accessToken string) (*SimbaTo
 }
 
 type SimbaToolsItemsTopGetResponse struct {
-	Rankeditems []*RankedItem `json:"rankeditems"`
+	Rankeditems struct {
+		RankedItem []*RankedItem `json:"ranked_item"`
+	} `json:"rankeditems"`
 }
 
 type SimbaToolsItemsTopGetResponseResult struct {

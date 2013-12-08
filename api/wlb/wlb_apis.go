@@ -5,7 +5,7 @@
 package wlb
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 查询库存明细 */
@@ -53,7 +53,9 @@ func (r *InventoryIpcInventorydetailGetRequest) GetResponse(accessToken string) 
 }
 
 type InventoryIpcInventorydetailGetResponse struct {
-	InventoryDetails []*IpcInventoryDetailDo `json:"inventory_details"`
+	InventoryDetails struct {
+		IpcInventoryDetailDo []*IpcInventoryDetailDo `json:"ipc_inventory_detail_do"`
+	} `json:"inventory_details"`
 }
 
 type InventoryIpcInventorydetailGetResponseResult struct {
@@ -97,8 +99,10 @@ func (r *WlbInventoryDetailGetRequest) GetResponse(accessToken string) (*WlbInve
 }
 
 type WlbInventoryDetailGetResponse struct {
-	InventoryList []*WlbInventory `json:"inventory_list"`
-	ItemId        int             `json:"item_id"`
+	InventoryList struct {
+		WlbInventory []*WlbInventory `json:"wlb_inventory"`
+	}          `json:"inventory_list"`
+	ItemId int `json:"item_id"`
 }
 
 type WlbInventoryDetailGetResponseResult struct {
@@ -213,8 +217,10 @@ func (r *WlbInventorylogQueryRequest) GetResponse(accessToken string) (*WlbInven
 }
 
 type WlbInventorylogQueryResponse struct {
-	InventoryLogList []*WlbItemInventoryLog `json:"inventory_log_list"`
-	TotalCount       int                    `json:"total_count"`
+	InventoryLogList struct {
+		WlbItemInventoryLog []*WlbItemInventoryLog `json:"wlb_item_inventory_log"`
+	}              `json:"inventory_log_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbInventorylogQueryResponseResult struct {
@@ -502,8 +508,10 @@ func (r *WlbItemAuthorizationQueryRequest) GetResponse(accessToken string) (*Wlb
 }
 
 type WlbItemAuthorizationQueryResponse struct {
-	AuthorizationList []*WlbAuthorization `json:"authorization_list"`
-	TotalCount        int                 `json:"total_count"`
+	AuthorizationList struct {
+		WlbAuthorization []*WlbAuthorization `json:"wlb_authorization"`
+	}              `json:"authorization_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbItemAuthorizationQueryResponseResult struct {
@@ -545,8 +553,10 @@ func (r *WlbItemBatchQueryRequest) GetResponse(accessToken string) (*WlbItemBatc
 }
 
 type WlbItemBatchQueryResponse struct {
-	ItemInventoryBatchList []*WlbItemBatchInventory `json:"item_inventory_batch_list"`
-	TotalCount             int                      `json:"total_count"`
+	ItemInventoryBatchList struct {
+		WlbItemBatchInventory []*WlbItemBatchInventory `json:"wlb_item_batch_inventory"`
+	}              `json:"item_inventory_batch_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbItemBatchQueryResponseResult struct {
@@ -763,8 +773,10 @@ func (r *WlbItemConsignmentPageGetRequest) GetResponse(accessToken string) (*Wlb
 }
 
 type WlbItemConsignmentPageGetResponse struct {
-	TotalCount      int               `json:"total_count"`
-	WlbConsignMents []*WlbConsignMent `json:"wlb_consign_ments"`
+	TotalCount      int `json:"total_count"`
+	WlbConsignMents struct {
+		WlbConsignMent []*WlbConsignMent `json:"wlb_consign_ment"`
+	} `json:"wlb_consign_ments"`
 }
 
 type WlbItemConsignmentPageGetResponseResult struct {
@@ -850,7 +862,9 @@ func (r *WlbItemMapGetRequest) GetResponse(accessToken string) (*WlbItemMapGetRe
 }
 
 type WlbItemMapGetResponse struct {
-	OutEntityItemList []*OutEntityItem `json:"out_entity_item_list"`
+	OutEntityItemList struct {
+		OutEntityItem []*OutEntityItem `json:"out_entity_item"`
+	} `json:"out_entity_item_list"`
 }
 
 type WlbItemMapGetResponseResult struct {
@@ -957,8 +971,10 @@ func (r *WlbItemQueryRequest) GetResponse(accessToken string) (*WlbItemQueryResp
 }
 
 type WlbItemQueryResponse struct {
-	ItemList   []*WlbItem `json:"item_list"`
-	TotalCount int        `json:"total_count"`
+	ItemList struct {
+		WlbItem []*WlbItem `json:"wlb_item"`
+	}              `json:"item_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbItemQueryResponseResult struct {
@@ -1240,8 +1256,10 @@ func (r *WlbNotifyMessagePageGetRequest) GetResponse(accessToken string) (*WlbNo
 }
 
 type WlbNotifyMessagePageGetResponse struct {
-	TotalCount  int           `json:"total_count"`
-	WlbMessages []*WlbMessage `json:"wlb_messages"`
+	TotalCount  int `json:"total_count"`
+	WlbMessages struct {
+		WlbMessage []*WlbMessage `json:"wlb_message"`
+	} `json:"wlb_messages"`
 }
 
 type WlbNotifyMessagePageGetResponseResult struct {
@@ -1401,8 +1419,8 @@ func (r *WlbOrderCreateRequest) SetPrevOrderCode(value string) {
 	r.SetValue("prev_order_code", value)
 }
 
-/* 发收方发货方信息必须传 手机和电话必选其一
-收货方信息
+/* 收货方信息，必须传， 手机和电话必选其一。
+收货方信息：
 邮编^^^省^^^市^^^区^^^具体地址^^^收件方名称^^^手机^^^电话
 
 如果某一个字段的数据为空时，必须传NA */
@@ -1435,7 +1453,7 @@ func (r *WlbOrderCreateRequest) SetScheduleType(value string) {
 	r.SetValue("schedule_type", value)
 }
 
-/* 发货方信息，发收方发货方信息必须传 手机和电话必选其一
+/* 发货方信息，发货方信息必须传， 手机和电话必选其一。 发货方信息：
 邮编^^^省^^^市^^^区^^^具体地址^^^收件方名称^^^手机^^^电话
 如果某一个字段的数据为空时，必须传NA */
 func (r *WlbOrderCreateRequest) SetSenderInfo(value string) {
@@ -1559,8 +1577,10 @@ func (r *WlbOrderPageGetRequest) GetResponse(accessToken string) (*WlbOrderPageG
 }
 
 type WlbOrderPageGetResponse struct {
-	OrderList  []*WlbOrder `json:"order_list"`
-	TotalCount int         `json:"total_count"`
+	OrderList struct {
+		WlbOrder []*WlbOrder `json:"wlb_order"`
+	}              `json:"order_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbOrderPageGetResponseResult struct {
@@ -1659,6 +1679,51 @@ type WlbOrderScheduleRuleUpdateResponseResult struct {
 	Response *WlbOrderScheduleRuleUpdateResponse `json:"wlb_order_schedule_rule_update_response"`
 }
 
+/* 外部ERP可通过该接口查询一段时间内的物流宝订单，以及订单详情 */
+type WlbOrderdetailDateGetRequest struct {
+	open_taobao.TaobaoMethodRequest
+}
+
+/* 查询条件截止日期 */
+func (r *WlbOrderdetailDateGetRequest) SetEndTime(value string) {
+	r.SetValue("end_time", value)
+}
+
+/* 分页查询参数，指定查询页数，默认为1 */
+func (r *WlbOrderdetailDateGetRequest) SetPageNo(value string) {
+	r.SetValue("page_no", value)
+}
+
+/* 分页查询参数，每页查询数量，默认20，最大值50,大于50时按照50条查询 */
+func (r *WlbOrderdetailDateGetRequest) SetPageSize(value string) {
+	r.SetValue("page_size", value)
+}
+
+/* 查询起始日期 */
+func (r *WlbOrderdetailDateGetRequest) SetStartTime(value string) {
+	r.SetValue("start_time", value)
+}
+
+func (r *WlbOrderdetailDateGetRequest) GetResponse(accessToken string) (*WlbOrderdetailDateGetResponse, []byte, error) {
+	var resp WlbOrderdetailDateGetResponseResult
+	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.wlb.orderdetail.date.get", &resp)
+	if err != nil {
+		return nil, data, err
+	}
+	return resp.Response, data, err
+}
+
+type WlbOrderdetailDateGetResponse struct {
+	OrderDetailList struct {
+		WlbOrderDetail []*WlbOrderDetail `json:"wlb_order_detail"`
+	}              `json:"order_detail_list"`
+	TotalCount int `json:"total_count"`
+}
+
+type WlbOrderdetailDateGetResponseResult struct {
+	Response *WlbOrderdetailDateGetResponse `json:"wlb_orderdetail_date_get_response"`
+}
+
 /* 分页查询物流宝订单商品详情 */
 type WlbOrderitemPageGetRequest struct {
 	open_taobao.TaobaoMethodRequest
@@ -1689,8 +1754,10 @@ func (r *WlbOrderitemPageGetRequest) GetResponse(accessToken string) (*WlbOrderi
 }
 
 type WlbOrderitemPageGetResponse struct {
-	OrderItemList []*WlbOrderItem `json:"order_item_list"`
-	TotalCount    int             `json:"total_count"`
+	OrderItemList struct {
+		WlbOrderItem []*WlbOrderItem `json:"wlb_order_item"`
+	}              `json:"order_item_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbOrderitemPageGetResponseResult struct {
@@ -1754,8 +1821,10 @@ func (r *WlbOrderscheduleruleQueryRequest) GetResponse(accessToken string) (*Wlb
 }
 
 type WlbOrderscheduleruleQueryResponse struct {
-	OrderScheduleRuleList []*WlbOrderScheduleRule `json:"order_schedule_rule_list"`
-	TotalCount            int                     `json:"total_count"`
+	OrderScheduleRuleList struct {
+		WlbOrderScheduleRule []*WlbOrderScheduleRule `json:"wlb_order_schedule_rule"`
+	}              `json:"order_schedule_rule_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbOrderscheduleruleQueryResponseResult struct {
@@ -1782,7 +1851,9 @@ func (r *WlbOrderstatusGetRequest) GetResponse(accessToken string) (*WlbOrdersta
 }
 
 type WlbOrderstatusGetResponse struct {
-	WlbOrderStatus []*WlbProcessStatus `json:"wlb_order_status"`
+	WlbOrderStatus struct {
+		WlbProcessStatus []*WlbProcessStatus `json:"wlb_process_status"`
+	} `json:"wlb_order_status"`
 }
 
 type WlbOrderstatusGetResponseResult struct {
@@ -1904,8 +1975,10 @@ func (r *WlbReplenishStatisticsRequest) GetResponse(accessToken string) (*WlbRep
 }
 
 type WlbReplenishStatisticsResponse struct {
-	ReplenishList []*WlbReplenish `json:"replenish_list"`
-	TotalCount    int             `json:"total_count"`
+	ReplenishList struct {
+		WlbReplenish []*WlbReplenish `json:"wlb_replenish"`
+	}              `json:"replenish_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbReplenishStatisticsResponseResult struct {
@@ -1948,8 +2021,10 @@ func (r *WlbSubscriptionQueryRequest) GetResponse(accessToken string) (*WlbSubsc
 }
 
 type WlbSubscriptionQueryResponse struct {
-	SellerSubscriptionList []*WlbSellerSubscription `json:"seller_subscription_list"`
-	TotalCount             int                      `json:"total_count"`
+	SellerSubscriptionList struct {
+		WlbSellerSubscription []*WlbSellerSubscription `json:"wlb_seller_subscription"`
+	}              `json:"seller_subscription_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbSubscriptionQueryResponseResult struct {
@@ -1986,8 +2061,10 @@ func (r *WlbTmsorderQueryRequest) GetResponse(accessToken string) (*WlbTmsorderQ
 }
 
 type WlbTmsorderQueryResponse struct {
-	TmsOrderList []*WlbTmsOrder `json:"tms_order_list"`
-	TotalCount   int            `json:"total_count"`
+	TmsOrderList struct {
+		WlbTmsOrder []*WlbTmsOrder `json:"wlb_tms_order"`
+	}              `json:"tms_order_list"`
+	TotalCount int `json:"total_count"`
 }
 
 type WlbTmsorderQueryResponseResult struct {
@@ -2022,7 +2099,9 @@ func (r *WlbTradeorderGetRequest) GetResponse(accessToken string) (*WlbTradeorde
 }
 
 type WlbTradeorderGetResponse struct {
-	WlbOrderList []*WlbOrder `json:"wlb_order_list"`
+	WlbOrderList struct {
+		WlbOrder []*WlbOrder `json:"wlb_order"`
+	} `json:"wlb_order_list"`
 }
 
 type WlbTradeorderGetResponseResult struct {
@@ -2069,6 +2148,8 @@ func (r *WlbWaybillallocationRequestwaybillnumRequest) GetResponse(accessToken s
 }
 
 type WlbWaybillallocationRequestwaybillnumResponse struct {
+	ServiceCode    string   `json:"service_code"`
+	TmsWaybillList []string `json:"tms_waybill_list"`
 }
 
 type WlbWaybillallocationRequestwaybillnumResponseResult struct {

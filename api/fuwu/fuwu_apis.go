@@ -5,7 +5,7 @@
 package fuwu
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 服务商通过使用该接口来产生营销链接，通过把这种链接发送给商家来做自定义人群的服务营销<br>
@@ -43,6 +43,7 @@ type FuwuSaleLinkGenResponseResult struct {
 
 /* 用于ISV查询自己名下的应用及收费项目的订单记录（已付款订单）。
 建议用于查询前一日的历史记录，不适合用作实时数据查询。
+现在只能查询90天以内的数据
 该接口限制每分钟所有appkey调用总和只能有800次。 */
 type VasOrderSearchRequest struct {
 	open_taobao.TaobaoMethodRequest
@@ -108,8 +109,10 @@ func (r *VasOrderSearchRequest) GetResponse(accessToken string) (*VasOrderSearch
 }
 
 type VasOrderSearchResponse struct {
-	ArticleBizOrders []*ArticleBizOrder `json:"article_biz_orders"`
-	TotalItem        int                `json:"total_item"`
+	ArticleBizOrders struct {
+		ArticleBizOrder []*ArticleBizOrder `json:"article_biz_order"`
+	}             `json:"article_biz_orders"`
+	TotalItem int `json:"total_item"`
 }
 
 type VasOrderSearchResponseResult struct {
@@ -181,8 +184,10 @@ func (r *VasSubscSearchRequest) GetResponse(accessToken string) (*VasSubscSearch
 }
 
 type VasSubscSearchResponse struct {
-	ArticleSubs []*ArticleSub `json:"article_subs"`
-	TotalItem   int           `json:"total_item"`
+	ArticleSubs struct {
+		ArticleSub []*ArticleSub `json:"article_sub"`
+	}             `json:"article_subs"`
+	TotalItem int `json:"total_item"`
 }
 
 type VasSubscSearchResponseResult struct {
@@ -214,7 +219,9 @@ func (r *VasSubscribeGetRequest) GetResponse(accessToken string) (*VasSubscribeG
 }
 
 type VasSubscribeGetResponse struct {
-	ArticleUserSubscribes []*ArticleUserSubscribe `json:"article_user_subscribes"`
+	ArticleUserSubscribes struct {
+		ArticleUserSubscribe []*ArticleUserSubscribe `json:"article_user_subscribe"`
+	} `json:"article_user_subscribes"`
 }
 
 type VasSubscribeGetResponseResult struct {

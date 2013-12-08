@@ -5,7 +5,7 @@
 package refund
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 获取单笔退款详情 */
@@ -112,8 +112,10 @@ func (r *RefundMessagesGetRequest) GetResponse(accessToken string) (*RefundMessa
 }
 
 type RefundMessagesGetResponse struct {
-	RefundMessages []*RefundMessage `json:"refund_messages"`
-	TotalResults   int              `json:"total_results"`
+	RefundMessages struct {
+		RefundMessage []*RefundMessage `json:"refund_message"`
+	}                `json:"refund_messages"`
+	TotalResults int `json:"total_results"`
 }
 
 type RefundMessagesGetResponseResult struct {
@@ -235,8 +237,10 @@ func (r *RefundsApplyGetRequest) GetResponse(accessToken string) (*RefundsApplyG
 }
 
 type RefundsApplyGetResponse struct {
-	Refunds      []*Refund `json:"refunds"`
-	TotalResults int       `json:"total_results"`
+	Refunds struct {
+		Refund []*Refund `json:"refund"`
+	}                `json:"refunds"`
+	TotalResults int `json:"total_results"`
 }
 
 type RefundsApplyGetResponseResult struct {
@@ -322,9 +326,11 @@ func (r *RefundsReceiveGetRequest) GetResponse(accessToken string) (*RefundsRece
 }
 
 type RefundsReceiveGetResponse struct {
-	HasNext      bool      `json:"has_next"`
-	Refunds      []*Refund `json:"refunds"`
-	TotalResults int       `json:"total_results"`
+	HasNext bool `json:"has_next"`
+	Refunds struct {
+		Refund []*Refund `json:"refund"`
+	}                `json:"refunds"`
+	TotalResults int `json:"total_results"`
 }
 
 type RefundsReceiveGetResponseResult struct {

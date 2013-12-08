@@ -5,7 +5,7 @@
 package favorite
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 添加商品或店铺到收藏夹 */
@@ -70,8 +70,10 @@ func (r *FavoriteSearchRequest) GetResponse(accessToken string) (*FavoriteSearch
 }
 
 type FavoriteSearchResponse struct {
-	CollectItems []*CollectItem `json:"collect_items"`
-	TotalResults int            `json:"total_results"`
+	CollectItems struct {
+		CollectItem []*CollectItem `json:"collect_item"`
+	}                `json:"collect_items"`
+	TotalResults int `json:"total_results"`
 }
 
 type FavoriteSearchResponseResult struct {

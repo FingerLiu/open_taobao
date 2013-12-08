@@ -4,7 +4,7 @@
 
 package product
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 卖家设置售后服务对象 */
 type AfterSale struct {
@@ -35,6 +35,7 @@ type Item struct {
 	Features                   string          `json:"features"`
 	FoodSecurity               *FoodSecurity   `json:"food_security"`
 	FreightPayer               string          `json:"freight_payer"`
+	GlobalStockCountry         string          `json:"global_stock_country"`
 	GlobalStockType            string          `json:"global_stock_type"`
 	HasDiscount                bool            `json:"has_discount"`
 	HasInvoice                 bool            `json:"has_invoice"`
@@ -53,48 +54,57 @@ type Item struct {
 	IsTiming                   bool            `json:"is_timing"`
 	IsVirtual                  bool            `json:"is_virtual"`
 	IsXinpin                   bool            `json:"is_xinpin"`
-	ItemImgs                   []*ItemImg      `json:"item_imgs"`
-	ItemSize                   string          `json:"item_size"`
-	ItemWeight                 string          `json:"item_weight"`
-	ListTime                   string          `json:"list_time"`
-	LocalityLife               *LocalityLife   `json:"locality_life"`
-	Location                   *Location       `json:"location"`
-	Modified                   string          `json:"modified"`
-	Nick                       string          `json:"nick"`
-	Num                        int             `json:"num"`
-	NumIid                     int             `json:"num_iid"`
-	OneStation                 bool            `json:"one_station"`
-	OuterId                    string          `json:"outer_id"`
-	OuterShopAuctionTemplateId int             `json:"outer_shop_auction_template_id"`
-	PaimaiInfo                 *PaimaiInfo     `json:"paimai_info"`
-	PicUrl                     string          `json:"pic_url"`
-	PostFee                    float64         `json:"post_fee"`
-	PostageId                  int             `json:"postage_id"`
-	Price                      float64         `json:"price"`
-	ProductId                  int             `json:"product_id"`
-	PromotedService            string          `json:"promoted_service"`
-	PropImgs                   []*PropImg      `json:"prop_imgs"`
-	PropertyAlias              string          `json:"property_alias"`
-	Props                      string          `json:"props"`
-	PropsName                  string          `json:"props_name"`
-	Score                      int             `json:"score"`
-	SecondKill                 string          `json:"second_kill"`
-	SellPoint                  string          `json:"sell_point"`
-	SellPromise                bool            `json:"sell_promise"`
-	SellerCids                 string          `json:"seller_cids"`
-	Skus                       []*Sku          `json:"skus"`
-	StuffStatus                string          `json:"stuff_status"`
-	SubStock                   int             `json:"sub_stock"`
-	TemplateId                 string          `json:"template_id"`
-	Title                      string          `json:"title"`
-	Type                       string          `json:"type"`
-	ValidThru                  int             `json:"valid_thru"`
-	Videos                     []*Video        `json:"videos"`
-	Violation                  bool            `json:"violation"`
-	WapDesc                    string          `json:"wap_desc"`
-	WapDetailUrl               string          `json:"wap_detail_url"`
-	WithHoldQuantity           int             `json:"with_hold_quantity"`
-	WwStatus                   bool            `json:"ww_status"`
+	ItemImgs                   struct {
+		ItemImg []*ItemImg `json:"item_img"`
+	}                                        `json:"item_imgs"`
+	ItemSize                   string        `json:"item_size"`
+	ItemWeight                 string        `json:"item_weight"`
+	ListTime                   string        `json:"list_time"`
+	LocalityLife               *LocalityLife `json:"locality_life"`
+	Location                   *Location     `json:"location"`
+	Modified                   string        `json:"modified"`
+	Nick                       string        `json:"nick"`
+	Num                        int           `json:"num"`
+	NumIid                     int           `json:"num_iid"`
+	OneStation                 bool          `json:"one_station"`
+	OuterId                    string        `json:"outer_id"`
+	OuterShopAuctionTemplateId int           `json:"outer_shop_auction_template_id"`
+	PaimaiInfo                 *PaimaiInfo   `json:"paimai_info"`
+	PicUrl                     string        `json:"pic_url"`
+	PostFee                    float64       `json:"post_fee"`
+	PostageId                  int           `json:"postage_id"`
+	Price                      float64       `json:"price"`
+	ProductId                  int           `json:"product_id"`
+	PromotedService            string        `json:"promoted_service"`
+	PropImgs                   struct {
+		PropImg []*PropImg `json:"prop_img"`
+	}                    `json:"prop_imgs"`
+	PropertyAlias string `json:"property_alias"`
+	Props         string `json:"props"`
+	PropsName     string `json:"props_name"`
+	Score         int    `json:"score"`
+	SecondKill    string `json:"second_kill"`
+	SellPoint     string `json:"sell_point"`
+	SellPromise   bool   `json:"sell_promise"`
+	SellerCids    string `json:"seller_cids"`
+	Skus          struct {
+		Sku []*Sku `json:"sku"`
+	}                  `json:"skus"`
+	StuffStatus string `json:"stuff_status"`
+	SubStock    int    `json:"sub_stock"`
+	TemplateId  string `json:"template_id"`
+	Title       string `json:"title"`
+	Type        string `json:"type"`
+	ValidThru   int    `json:"valid_thru"`
+	Videos      struct {
+		Video []*Video `json:"video"`
+	}                       `json:"videos"`
+	Violation        bool   `json:"violation"`
+	WapDesc          string `json:"wap_desc"`
+	WapDetailUrl     string `json:"wap_detail_url"`
+	WirelessDesc     string `json:"wireless_desc"`
+	WithHoldQuantity int    `json:"with_hold_quantity"`
+	WwStatus         bool   `json:"ww_status"`
 }
 
 /* 发货时间数据结构 */
@@ -141,11 +151,13 @@ type ItemImg struct {
 /* 本地生活垂直市场数据结构，修改宝贝时在参数empty_fields里设置locality_life可删除所有电子凭证信息 */
 type LocalityLife struct {
 	ChooseLogis           string `json:"choose_logis"`
+	Eticket               string `json:"eticket"`
 	Expirydate            string `json:"expirydate"`
 	Merchant              string `json:"merchant"`
 	NetworkId             string `json:"network_id"`
 	OnsaleAutoRefundRatio int    `json:"onsale_auto_refund_ratio"`
 	RefundRatio           int    `json:"refund_ratio"`
+	Refundmafee           string `json:"refundmafee"`
 	Verification          string `json:"verification"`
 }
 
@@ -224,39 +236,45 @@ type ItemTemplate struct {
 
 /* 产品结构 */
 type Product struct {
-	Binds             string              `json:"binds"`
-	BindsStr          string              `json:"binds_str"`
-	CatName           string              `json:"cat_name"`
-	Cid               int                 `json:"cid"`
-	CollectNum        int                 `json:"collect_num"`
-	Created           string              `json:"created"`
-	CspuFeature       string              `json:"cspu_feature"`
-	CustomerProps     string              `json:"customer_props"`
-	Desc              string              `json:"desc"`
-	Level             int                 `json:"level"`
-	Modified          string              `json:"modified"`
-	Name              string              `json:"name"`
-	OuterId           string              `json:"outer_id"`
-	PicPath           string              `json:"pic_path"`
-	PicUrl            string              `json:"pic_url"`
-	Price             float64             `json:"price"`
-	ProductExtraInfos []*ProductExtraInfo `json:"product_extra_infos"`
-	ProductId         int                 `json:"product_id"`
-	ProductImgs       []*ProductImg       `json:"product_imgs"`
-	ProductPropImgs   []*ProductPropImg   `json:"product_prop_imgs"`
-	PropertyAlias     string              `json:"property_alias"`
-	Props             string              `json:"props"`
-	PropsStr          string              `json:"props_str"`
-	RateNum           int                 `json:"rate_num"`
-	SaleNum           int                 `json:"sale_num"`
-	SaleProps         string              `json:"sale_props"`
-	SalePropsStr      string              `json:"sale_props_str"`
-	SellPt            string              `json:"sell_pt"`
-	ShopPrice         string              `json:"shop_price"`
-	StandardPrice     string              `json:"standard_price"`
-	Status            int                 `json:"status"`
-	Tsc               string              `json:"tsc"`
-	VerticalMarket    int                 `json:"vertical_market"`
+	Binds             string  `json:"binds"`
+	BindsStr          string  `json:"binds_str"`
+	CatName           string  `json:"cat_name"`
+	Cid               int     `json:"cid"`
+	CollectNum        int     `json:"collect_num"`
+	Created           string  `json:"created"`
+	CspuFeature       string  `json:"cspu_feature"`
+	CustomerProps     string  `json:"customer_props"`
+	Desc              string  `json:"desc"`
+	Level             int     `json:"level"`
+	Modified          string  `json:"modified"`
+	Name              string  `json:"name"`
+	OuterId           string  `json:"outer_id"`
+	PicPath           string  `json:"pic_path"`
+	PicUrl            string  `json:"pic_url"`
+	Price             float64 `json:"price"`
+	ProductExtraInfos struct {
+		ProductExtraInfo []*ProductExtraInfo `json:"product_extra_info"`
+	}               `json:"product_extra_infos"`
+	ProductId   int `json:"product_id"`
+	ProductImgs struct {
+		ProductImg []*ProductImg `json:"product_img"`
+	}               `json:"product_imgs"`
+	ProductPropImgs struct {
+		ProductPropImg []*ProductPropImg `json:"product_prop_img"`
+	}                     `json:"product_prop_imgs"`
+	PropertyAlias  string `json:"property_alias"`
+	Props          string `json:"props"`
+	PropsStr       string `json:"props_str"`
+	RateNum        int    `json:"rate_num"`
+	SaleNum        int    `json:"sale_num"`
+	SaleProps      string `json:"sale_props"`
+	SalePropsStr   string `json:"sale_props_str"`
+	SellPt         string `json:"sell_pt"`
+	ShopPrice      string `json:"shop_price"`
+	StandardPrice  string `json:"standard_price"`
+	Status         int    `json:"status"`
+	Tsc            string `json:"tsc"`
+	VerticalMarket int    `json:"vertical_market"`
 }
 
 /* 产品扩展信息 */
@@ -290,14 +308,16 @@ type ProductPropImg struct {
 
 /* 批量异步任务结果 */
 type Task struct {
-	CheckCode   string     `json:"check_code"`
-	Created     string     `json:"created"`
-	DownloadUrl string     `json:"download_url"`
-	Method      string     `json:"method"`
-	Schedule    string     `json:"schedule"`
-	Status      string     `json:"status"`
-	Subtasks    []*Subtask `json:"subtasks"`
-	TaskId      int        `json:"task_id"`
+	CheckCode   string `json:"check_code"`
+	Created     string `json:"created"`
+	DownloadUrl string `json:"download_url"`
+	Method      string `json:"method"`
+	Schedule    string `json:"schedule"`
+	Status      string `json:"status"`
+	Subtasks    struct {
+		Subtask []*Subtask `json:"subtask"`
+	}          `json:"subtasks"`
+	TaskId int `json:"task_id"`
 }
 
 /* 批量异步任务的子任务结果 */
@@ -309,8 +329,12 @@ type Subtask struct {
 
 /* 优惠信息对象 */
 type PromotionDisplayTop struct {
-	PromotionInItem []*PromotionInItem `json:"promotion_in_item"`
-	PromotionInShop []*PromotionInShop `json:"promotion_in_shop"`
+	PromotionInItem struct {
+		PromotionInItem []*PromotionInItem `json:"promotion_in_item"`
+	}               `json:"promotion_in_item"`
+	PromotionInShop struct {
+		PromotionInShop []*PromotionInShop `json:"promotion_in_shop"`
+	} `json:"promotion_in_shop"`
 }
 
 /* 单品级优惠信息 */
@@ -336,7 +360,9 @@ type PromotionInShop struct {
 
 /* 管控的类目以及品牌信息 */
 type BrandCatControlInfo struct {
-	BrandCatControls []*BrandCatControl `json:"brand_cat_controls"`
+	BrandCatControls struct {
+		BrandCatControl []*BrandCatControl `json:"brand_cat_control"`
+	} `json:"brand_cat_controls"`
 }
 
 /* 管控的品牌类目信息 */
@@ -348,6 +374,14 @@ type BrandCatControl struct {
 	CertifiedData string `json:"certified_data"`
 }
 
+/* 属性输入特征DO */
+type PropertyInputDO struct {
+	IsAllowInput     bool `json:"is_allow_input"`
+	IsRootAllowInput bool `json:"is_root_allow_input"`
+	IsSubProperty    bool `json:"is_sub_property"`
+	PropertyId       int  `json:"property_id"`
+}
+
 /* 被管控的品牌和类目的所对应的销售属性 */
 type CatBrandSaleProp struct {
 	BrandId            int  `json:"brand_id"`
@@ -357,33 +391,27 @@ type CatBrandSaleProp struct {
 	PropertyId         int  `json:"property_id"`
 }
 
-/* 图书类目导入返回结果 */
-type ProductBooks struct {
-	Author     string `json:"author"`
-	BarCode    string `json:"bar_code"`
-	BookName   string `json:"book_name"`
-	CategoryId int    `json:"category_id"`
-	Isbn       string `json:"isbn"`
-	Price      string `json:"price"`
-}
-
 /* ProductSpec(产品规格)结构。 */
 type ProductSpec struct {
-	Barcode          string         `json:"barcode"`
-	BrandId          int            `json:"brand_id"`
-	CertifiedPics    []*CertPicInfo `json:"certified_pics"`
-	CertifiedTxts    []*CertTxtInfo `json:"certified_txts"`
-	ChangeProp       string         `json:"change_prop"`
-	CustomePropsName string         `json:"custome_props_name"`
-	LabelPrice       int            `json:"label_price"`
-	MarketTime       string         `json:"market_time"`
-	PicUrl           string         `json:"pic_url"`
-	ProductCode      string         `json:"product_code"`
-	ProductId        int            `json:"product_id"`
-	SpecId           int            `json:"spec_id"`
-	SpecProps        string         `json:"spec_props"`
-	SpecPropsAlias   string         `json:"spec_props_alias"`
-	Status           int            `json:"status"`
+	Barcode       string `json:"barcode"`
+	BrandId       int    `json:"brand_id"`
+	CertifiedPics struct {
+		CertPicInfo []*CertPicInfo `json:"cert_pic_info"`
+	}             `json:"certified_pics"`
+	CertifiedTxts struct {
+		CertTxtInfo []*CertTxtInfo `json:"cert_txt_info"`
+	}                       `json:"certified_txts"`
+	ChangeProp       string `json:"change_prop"`
+	CustomePropsName string `json:"custome_props_name"`
+	LabelPrice       int    `json:"label_price"`
+	MarketTime       string `json:"market_time"`
+	PicUrl           string `json:"pic_url"`
+	ProductCode      string `json:"product_code"`
+	ProductId        int    `json:"product_id"`
+	SpecId           int    `json:"spec_id"`
+	SpecProps        string `json:"spec_props"`
+	SpecPropsAlias   string `json:"spec_props_alias"`
+	Status           int    `json:"status"`
 }
 
 /* 产品资质认证图片信息，包括认证类型以及图片url */
@@ -396,4 +424,16 @@ type CertPicInfo struct {
 type CertTxtInfo struct {
 	CertType int    `json:"cert_type"`
 	Text     string `json:"text"`
+}
+
+/* 产品规格审核信息 */
+type Ticket struct {
+	AuditSellerId int    `json:"audit_seller_id"`
+	CreateUserId  int    `json:"create_user_id"`
+	GmtCreate     string `json:"gmt_create"`
+	GmtModified   string `json:"gmt_modified"`
+	Memo          string `json:"memo"`
+	Reason        string `json:"reason"`
+	SpecId        int    `json:"spec_id"`
+	Status        int    `json:"status"`
 }

@@ -4,37 +4,39 @@
 
 package hotel
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* Hotel（酒店）结构。各字段详细说明可参考接口定义，如：酒店发布接口。 */
 type Hotel struct {
-	Address         string      `json:"address"`
-	AliasName       string      `json:"alias_name"`
-	AuditDenyReason string      `json:"audit_deny_reason"`
-	City            int         `json:"city"`
-	CityStr         string      `json:"city_str"`
-	Country         string      `json:"country"`
-	CountryStr      string      `json:"country_str"`
-	Created         string      `json:"created"`
-	DecorateTime    string      `json:"decorate_time"`
-	Desc            string      `json:"desc"`
-	District        int         `json:"district"`
-	DistrictStr     string      `json:"district_str"`
-	Hid             int         `json:"hid"`
-	Level           string      `json:"level"`
-	Modified        string      `json:"modified"`
-	Name            string      `json:"name"`
-	OpeningTime     string      `json:"opening_time"`
-	Orientation     string      `json:"orientation"`
-	PicUrl          string      `json:"pic_url"`
-	Province        int         `json:"province"`
-	ProvinceStr     string      `json:"province_str"`
-	RoomTypes       []*RoomType `json:"room_types"`
-	Rooms           int         `json:"rooms"`
-	Service         string      `json:"service"`
-	Status          int         `json:"status"`
-	Storeys         int         `json:"storeys"`
-	Tel             string      `json:"tel"`
+	Address         string `json:"address"`
+	AliasName       string `json:"alias_name"`
+	AuditDenyReason string `json:"audit_deny_reason"`
+	City            int    `json:"city"`
+	CityStr         string `json:"city_str"`
+	Country         string `json:"country"`
+	CountryStr      string `json:"country_str"`
+	Created         string `json:"created"`
+	DecorateTime    string `json:"decorate_time"`
+	Desc            string `json:"desc"`
+	District        int    `json:"district"`
+	DistrictStr     string `json:"district_str"`
+	Hid             int    `json:"hid"`
+	Level           string `json:"level"`
+	Modified        string `json:"modified"`
+	Name            string `json:"name"`
+	OpeningTime     string `json:"opening_time"`
+	Orientation     string `json:"orientation"`
+	PicUrl          string `json:"pic_url"`
+	Province        int    `json:"province"`
+	ProvinceStr     string `json:"province_str"`
+	RoomTypes       struct {
+		RoomType []*RoomType `json:"room_type"`
+	}              `json:"room_types"`
+	Rooms   int    `json:"rooms"`
+	Service string `json:"service"`
+	Status  int    `json:"status"`
+	Storeys int    `json:"storeys"`
+	Tel     string `json:"tel"`
 }
 
 /* RoomType（房型）结构。各字段详细说明可参考接口定义，如：房型发布接口。 */
@@ -57,36 +59,40 @@ type HotelImage struct {
 
 /* HotelOrder（酒店订单）结构。各字段详细说明可参考接口定义。注意：trade_status，refund_status，logistics_status不是严格准确的，请以交易API，物流API等得到的订单状态、物流状态为准确依据。 */
 type HotelOrder struct {
-	AlipayTradeNo   string        `json:"alipay_trade_no"`
-	ArriveEarly     string        `json:"arrive_early"`
-	ArriveLate      string        `json:"arrive_late"`
-	BuyerNick       string        `json:"buyer_nick"`
-	CheckinDate     string        `json:"checkin_date"`
-	CheckoutDate    string        `json:"checkout_date"`
-	ContactName     string        `json:"contact_name"`
-	ContactPhone    string        `json:"contact_phone"`
-	ContactPhoneBak string        `json:"contact_phone_bak"`
-	Created         string        `json:"created"`
-	EndTime         string        `json:"end_time"`
-	Gid             int           `json:"gid"`
-	Guests          []*OrderGuest `json:"guests"`
-	Hid             int           `json:"hid"`
-	LogisticsStatus string        `json:"logistics_status"`
-	Message         string        `json:"message"`
-	Modified        string        `json:"modified"`
-	Nights          int           `json:"nights"`
-	Oid             int           `json:"oid"`
-	OutOid          string        `json:"out_oid"`
-	PayTime         string        `json:"pay_time"`
-	Payment         int           `json:"payment"`
-	RefundStatus    string        `json:"refund_status"`
-	Rid             int           `json:"rid"`
-	RoomNumber      int           `json:"room_number"`
-	SellerNick      string        `json:"seller_nick"`
-	Tid             int           `json:"tid"`
-	TotalRoomPrice  int           `json:"total_room_price"`
-	TradeStatus     string        `json:"trade_status"`
-	Type            string        `json:"type"`
+	AlipayTradeNo   string `json:"alipay_trade_no"`
+	ArriveEarly     string `json:"arrive_early"`
+	ArriveLate      string `json:"arrive_late"`
+	BuyerNick       string `json:"buyer_nick"`
+	CheckinDate     string `json:"checkin_date"`
+	CheckoutDate    string `json:"checkout_date"`
+	Comment         string `json:"comment"`
+	ContactName     string `json:"contact_name"`
+	ContactPhone    string `json:"contact_phone"`
+	ContactPhoneBak string `json:"contact_phone_bak"`
+	Created         string `json:"created"`
+	EndTime         string `json:"end_time"`
+	Gid             int    `json:"gid"`
+	Guests          struct {
+		OrderGuest []*OrderGuest `json:"order_guest"`
+	}                      `json:"guests"`
+	Hid             int    `json:"hid"`
+	LogisticsStatus string `json:"logistics_status"`
+	Message         string `json:"message"`
+	Modified        string `json:"modified"`
+	Nights          int    `json:"nights"`
+	Oid             int    `json:"oid"`
+	OutOid          string `json:"out_oid"`
+	PayTime         string `json:"pay_time"`
+	Payment         int    `json:"payment"`
+	Prices          []int  `json:"prices"`
+	RefundStatus    string `json:"refund_status"`
+	Rid             int    `json:"rid"`
+	RoomNumber      int    `json:"room_number"`
+	SellerNick      string `json:"seller_nick"`
+	Tid             int    `json:"tid"`
+	TotalRoomPrice  int    `json:"total_room_price"`
+	TradeStatus     string `json:"trade_status"`
+	Type            string `json:"type"`
 }
 
 /* 酒店订单入住人结构。 */

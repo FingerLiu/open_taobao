@@ -4,7 +4,7 @@
 
 package wangwang
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 关键词列表 */
 type WordList struct {
@@ -13,13 +13,17 @@ type WordList struct {
 
 /* 聊天记录列表 */
 type MsgList struct {
-	Content   string           `json:"content"`
-	Direction int              `json:"direction"`
-	Length    int              `json:"length"`
-	Time      string           `json:"time"`
-	Type      int              `json:"type"`
-	UrlLists  []*UrlList       `json:"url_lists"`
-	WordLists []*WordCountList `json:"word_lists"`
+	Content   string `json:"content"`
+	Direction int    `json:"direction"`
+	Length    int    `json:"length"`
+	Time      string `json:"time"`
+	Type      int    `json:"type"`
+	UrlLists  struct {
+		UrlList []*UrlList `json:"url_list"`
+	}         `json:"url_lists"`
+	WordLists struct {
+		WordCountList []*WordCountList `json:"word_count_list"`
+	} `json:"word_lists"`
 }
 
 /* url列表 */
@@ -35,8 +39,10 @@ type WordCountList struct {
 
 /* 客户等待（客服）平均时长列表 */
 type WaitingTimesOnDay struct {
-	WaitingDate      string             `json:"waiting_date"`
-	WaitingTimeByIds []*WaitingTimeById `json:"waiting_time_by_ids"`
+	WaitingDate      string `json:"waiting_date"`
+	WaitingTimeByIds struct {
+		WaitingTimeById []*WaitingTimeById `json:"waiting_time_by_id"`
+	} `json:"waiting_time_by_ids"`
 }
 
 /* 平均等待时长 */
@@ -62,14 +68,18 @@ type EvalDetail struct {
 
 /* 客服评价统计列表(按天) */
 type StaffEvalStatOnDay struct {
-	EvalDate           string               `json:"eval_date"`
-	StaffEvalStatByIds []*StaffEvalStatById `json:"staff_eval_stat_by_ids"`
+	EvalDate           string `json:"eval_date"`
+	StaffEvalStatByIds struct {
+		StaffEvalStatById []*StaffEvalStatById `json:"staff_eval_stat_by_id"`
+	} `json:"staff_eval_stat_by_ids"`
 }
 
 /* 客服评价统计 */
 type StaffEvalStatById struct {
-	Evaluations    []*Evaluation `json:"evaluations"`
-	ServiceStaffId string        `json:"service_staff_id"`
+	Evaluations struct {
+		Evaluation []*Evaluation `json:"evaluation"`
+	}                     `json:"evaluations"`
+	ServiceStaffId string `json:"service_staff_id"`
 }
 
 /* 客服评价 */
@@ -93,8 +103,10 @@ type LoginLog struct {
 
 /* 未回复统计列表(按天) */
 type NonReplyStatOnDay struct {
-	NonreplyDate      string              `json:"nonreply_date"`
-	NonreplyStatByIds []*NonreplyStatById `json:"nonreply_stat_by_ids"`
+	NonreplyDate      string `json:"nonreply_date"`
+	NonreplyStatByIds struct {
+		NonreplyStatById []*NonreplyStatById `json:"nonreply_stat_by_id"`
+	} `json:"nonreply_stat_by_ids"`
 }
 
 /* 客服未回复统计 */
@@ -106,8 +118,10 @@ type NonreplyStatById struct {
 
 /* 某天的客服在线时长列表 */
 type OnlineTimesOnDay struct {
-	OnlineDate      string            `json:"online_date"`
-	OnlineTimeByIds []*OnlineTimeById `json:"online_time_by_ids"`
+	OnlineDate      string `json:"online_date"`
+	OnlineTimeByIds struct {
+		OnlineTimeById []*OnlineTimeById `json:"online_time_by_id"`
+	} `json:"online_time_by_ids"`
 }
 
 /* 在线时长 */
@@ -118,8 +132,10 @@ type OnlineTimeById struct {
 
 /* (某天)回复统计列表 */
 type ReplyStatOnDay struct {
-	ReplyDate      string           `json:"reply_date"`
-	ReplyStatByIds []*ReplyStatById `json:"reply_stat_by_ids"`
+	ReplyDate      string `json:"reply_date"`
+	ReplyStatByIds struct {
+		ReplyStatById []*ReplyStatById `json:"reply_stat_by_id"`
+	} `json:"reply_stat_by_ids"`
 }
 
 /* 客服回复统计 */

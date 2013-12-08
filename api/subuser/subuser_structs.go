@@ -4,17 +4,19 @@
 
 package subuser
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 子账号角色 */
 type Role struct {
-	CreateTime   string        `json:"create_time"`
-	Description  string        `json:"description"`
-	ModifiedTime string        `json:"modified_time"`
-	Permissions  []*Permission `json:"permissions"`
-	RoleId       int           `json:"role_id"`
-	RoleName     string        `json:"role_name"`
-	SellerId     int           `json:"seller_id"`
+	CreateTime   string `json:"create_time"`
+	Description  string `json:"description"`
+	ModifiedTime string `json:"modified_time"`
+	Permissions  struct {
+		Permission []*Permission `json:"permission"`
+	}               `json:"permissions"`
+	RoleId   int    `json:"role_id"`
+	RoleName string `json:"role_name"`
+	SellerId int    `json:"seller_id"`
 }
 
 /* 权限信息 */
@@ -38,8 +40,12 @@ type SubUserInfo struct {
 
 /* 子账号所拥有的权限对象(直接赋予的权限和通过角色赋予的权限的总和对象) */
 type SubUserPermission struct {
-	Permissions []*Permission `json:"permissions"`
-	Roles       []*Role       `json:"roles"`
+	Permissions struct {
+		Permission []*Permission `json:"permission"`
+	}     `json:"permissions"`
+	Roles struct {
+		Role []*Role `json:"role"`
+	} `json:"roles"`
 }
 
 /* 部门信息 */

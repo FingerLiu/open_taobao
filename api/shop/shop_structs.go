@@ -4,7 +4,7 @@
 
 package shop
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 店铺内卖家自定义类目 */
 type SellerCat struct {

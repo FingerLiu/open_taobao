@@ -5,7 +5,7 @@
 package eai
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 用户接入时调用该 API 进行授权初始化的操作。
@@ -450,7 +450,7 @@ func (r *TmallEaiOrderRefundGoodReturnMgetRequest) SetPageNo(value string) {
 	r.SetValue("page_no", value)
 }
 
-/* 每页条数。取值范围:大于零的整数; 默认值:40;最大值:100 */
+/* 每页条数。取值范围:大于零的整数; 默认值:10;最大值:40 */
 func (r *TmallEaiOrderRefundGoodReturnMgetRequest) SetPageSize(value string) {
 	r.SetValue("page_size", value)
 }
@@ -480,9 +480,11 @@ func (r *TmallEaiOrderRefundGoodReturnMgetRequest) GetResponse(accessToken strin
 }
 
 type TmallEaiOrderRefundGoodReturnMgetResponse struct {
-	HasNext        bool          `json:"has_next"`
-	ReturnBillList []*ReturnBill `json:"return_bill_list"`
-	TotalResults   int           `json:"total_results"`
+	HasNext        bool `json:"has_next"`
+	ReturnBillList struct {
+		ReturnBill []*ReturnBill `json:"return_bill"`
+	}                `json:"return_bill_list"`
+	TotalResults int `json:"total_results"`
 }
 
 type TmallEaiOrderRefundGoodReturnMgetResponseResult struct {
@@ -547,7 +549,7 @@ func (r *TmallEaiOrderRefundMessageGetRequest) SetPageNo(value string) {
 	r.SetValue("page_no", value)
 }
 
-/* 每页条数。取值范围:大于零的整数; 默认值:40;最大值:100 */
+/* 每页条数。取值范围:大于零的整数; 默认值:40;最大值:40 */
 func (r *TmallEaiOrderRefundMessageGetRequest) SetPageSize(value string) {
 	r.SetValue("page_size", value)
 }
@@ -573,8 +575,10 @@ func (r *TmallEaiOrderRefundMessageGetRequest) GetResponse(accessToken string) (
 }
 
 type TmallEaiOrderRefundMessageGetResponse struct {
-	MessageList  []*TmallRefundMessage `json:"message_list"`
-	TotalResults int                   `json:"total_results"`
+	MessageList struct {
+		TmallRefundMessage []*TmallRefundMessage `json:"tmall_refund_message"`
+	}                `json:"message_list"`
+	TotalResults int `json:"total_results"`
 }
 
 type TmallEaiOrderRefundMessageGetResponseResult struct {
@@ -596,7 +600,7 @@ func (r *TmallEaiOrderRefundMgetRequest) SetPageNo(value string) {
 	r.SetValue("page_no", value)
 }
 
-/* 每页条数。取值范围:大于零的整数; 默认值:40;最大值:100 */
+/* 每页条数。取值范围:大于零的整数; 默认值:10;最大值:40 */
 func (r *TmallEaiOrderRefundMgetRequest) SetPageSize(value string) {
 	r.SetValue("page_size", value)
 }
@@ -626,9 +630,11 @@ func (r *TmallEaiOrderRefundMgetRequest) GetResponse(accessToken string) (*Tmall
 }
 
 type TmallEaiOrderRefundMgetResponse struct {
-	HasNext        bool          `json:"has_next"`
-	RefundBillList []*RefundBill `json:"refund_bill_list"`
-	TotalResults   int           `json:"total_results"`
+	HasNext        bool `json:"has_next"`
+	RefundBillList struct {
+		RefundBill []*RefundBill `json:"refund_bill"`
+	}                `json:"refund_bill_list"`
+	TotalResults int `json:"total_results"`
 }
 
 type TmallEaiOrderRefundMgetResponseResult struct {
@@ -732,81 +738,4 @@ type TmallEaiOrderRefundRefuseResponse struct {
 
 type TmallEaiOrderRefundRefuseResponseResult struct {
 	Response *TmallEaiOrderRefundRefuseResponse `json:"tmall_eai_order_refund_refuse_response"`
-}
-
-/* 修改某个用户订阅的天猫退款的信息。
-可以追加某个事件订阅也可以去掉某个事件订阅。
-体现在参数action 里面:
-0:取消订阅;1:订阅。 */
-type TmallEaiOrderRegisterRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 对传入的事件的操作类型 0:取消订阅;1:订阅 */
-func (r *TmallEaiOrderRegisterRequest) SetAction(value string) {
-	r.SetValue("action", value)
-}
-
-/* 1:主订单模式;
-2:子订单模式;
-天猫退款消息订阅默认子订单模式。
-不传入即可。 */
-func (r *TmallEaiOrderRegisterRequest) SetDataMode(value string) {
-	r.SetValue("data_mode", value)
-}
-
-/* 需要订阅或者取消订阅的事件名称。
-可选择的值如下所示:
-RcRefundClosedEvent;
-RcRefundPrepaidEvent;
-RcReturnCreatedEvent;
-RcRefundSucceedEvent;
-RcRefundCreatedEvent;
-RcRefundModifiedEvent;
-RcReturnModifiedEvent;
-RcRefundSellerRefuseEvent;
-RcReturnConfirmFailedEvent;
-RcRefundTaobaoInvolvedEvent;
-RcRefundMessageCreatedEvent;
-RcReturnConfirmSucceedEvent;
-RcRefundPaymentFinishedEvent;
-RcRefundRefundableMarkedEvent;
-RcReturnBuyerReturnGoodsEvent;
-RcRefundSellerAgreeReturnEvent;
-RcRefundRefundableCanceledEvent; */
-func (r *TmallEaiOrderRegisterRequest) SetEventName(value string) {
-	r.SetValue("event_name", value)
-}
-
-/* 天猫退款订单可选topic:
-tmall.eai.order.refund.refundBill.push;
-tmall.eai.order.refund.refundStatus.push */
-func (r *TmallEaiOrderRegisterRequest) SetTopic(value string) {
-	r.SetValue("topic", value)
-}
-
-/* 标识出用户类型。
-这里“用户”指的是外部开发者。
-0:TOP-OPEN-API 用户
-1:JIP用户 */
-func (r *TmallEaiOrderRegisterRequest) SetUserType(value string) {
-	r.SetValue("user_type", value)
-}
-
-func (r *TmallEaiOrderRegisterRequest) GetResponse(accessToken string) (*TmallEaiOrderRegisterResponse, []byte, error) {
-	var resp TmallEaiOrderRegisterResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "tmall.eai.order.register", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type TmallEaiOrderRegisterResponse struct {
-	Count     int  `json:"count"`
-	IsSuccess bool `json:"is_success"`
-}
-
-type TmallEaiOrderRegisterResponseResult struct {
-	Response *TmallEaiOrderRegisterResponse `json:"tmall_eai_order_register_response"`
 }

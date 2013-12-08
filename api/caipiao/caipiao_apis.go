@@ -5,7 +5,7 @@
 package caipiao
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 根据卖家id与appkey获取商品信息。 */
@@ -23,8 +23,10 @@ func (r *CaipiaoGoodsInfoGetRequest) GetResponse(accessToken string) (*CaipiaoGo
 }
 
 type CaipiaoGoodsInfoGetResponse struct {
-	Results      []*LotteryWangcaiSellerGoodsInfo `json:"results"`
-	TotalResults int                              `json:"total_results"`
+	Results struct {
+		LotteryWangcaiSellerGoodsInfo []*LotteryWangcaiSellerGoodsInfo `json:"lottery_wangcai_seller_goods_info"`
+	}                `json:"results"`
+	TotalResults int `json:"total_results"`
 }
 
 type CaipiaoGoodsInfoGetResponseResult struct {
@@ -170,7 +172,7 @@ func (r *CaipiaoLotterySendbynickRequest) SetStakeCount(value string) {
 	r.SetValue("stake_count", value)
 }
 
-/* 送彩票给接收方的赠言。 不能超过50个字符，1个中文字符、1个英文字母及1个数字等均当作一个字符，如果超过，则会截取。 */
+/* 送彩票给接收方的赠言。 不能超过20个字符，1个中文字符、1个英文字母及1个数字等均当作一个字符，如果超过，则会截取。 */
 func (r *CaipiaoLotterySendbynickRequest) SetSweetyWords(value string) {
 	r.SetValue("sweety_words", value)
 }
@@ -207,8 +209,10 @@ func (r *CaipiaoLotterytypesGetRequest) GetResponse(accessToken string) (*Caipia
 }
 
 type CaipiaoLotterytypesGetResponse struct {
-	Results      []*LotteryType `json:"results"`
-	TotalResults int            `json:"total_results"`
+	Results struct {
+		LotteryType []*LotteryType `json:"lottery_type"`
+	}                `json:"results"`
+	TotalResults int `json:"total_results"`
 }
 
 type CaipiaoLotterytypesGetResponseResult struct {
@@ -250,8 +254,10 @@ func (r *CaipiaoPresentItemsGetRequest) GetResponse(accessToken string) (*Caipia
 }
 
 type CaipiaoPresentItemsGetResponse struct {
-	Results      []*LotteryWangcaiPresent `json:"results"`
-	TotalResults int                      `json:"total_results"`
+	Results struct {
+		LotteryWangcaiPresent []*LotteryWangcaiPresent `json:"lottery_wangcai_present"`
+	}                `json:"results"`
+	TotalResults int `json:"total_results"`
 }
 
 type CaipiaoPresentItemsGetResponseResult struct {
@@ -278,15 +284,20 @@ func (r *CaipiaoPresentStatGetRequest) GetResponse(accessToken string) (*Caipiao
 }
 
 type CaipiaoPresentStatGetResponse struct {
-	Results      []*LotteryWangcaiPresentStat `json:"results"`
-	TotalResults int                          `json:"total_results"`
+	Results struct {
+		LotteryWangcaiPresentStat []*LotteryWangcaiPresentStat `json:"lottery_wangcai_present_stat"`
+	}                `json:"results"`
+	TotalResults int `json:"total_results"`
 }
 
 type CaipiaoPresentStatGetResponseResult struct {
 	Response *CaipiaoPresentStatGetResponse `json:"caipiao_present_stat_get_response"`
 }
 
-/* 获取卖家最新的赠送订单列表(90天以内的)，支持按列表数量查询中奖订单，或按每天的日期分页查询中奖或所有订单。注意num与date只要传入一个即可，如果两个参数都传以date方式查询为准。 */
+/* 获取卖家赠送的中奖订单列表(90天以内)，支持两种方式查询：
+1.按num查询中奖订单，不支持分页。
+2.按date查询中奖订单或所有订单(以searchType区分)，支持分页。
+注意num与date只要传入一个即可，如果两个参数都传会以date方式查询。 */
 type CaipiaoPresentWinItemsGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -321,8 +332,10 @@ func (r *CaipiaoPresentWinItemsGetRequest) GetResponse(accessToken string) (*Cai
 }
 
 type CaipiaoPresentWinItemsGetResponse struct {
-	Results      []*LotteryWangcaiPresent `json:"results"`
-	TotalResults int                      `json:"total_results"`
+	Results struct {
+		LotteryWangcaiPresent []*LotteryWangcaiPresent `json:"lottery_wangcai_present"`
+	}                `json:"results"`
+	TotalResults int `json:"total_results"`
 }
 
 type CaipiaoPresentWinItemsGetResponseResult struct {

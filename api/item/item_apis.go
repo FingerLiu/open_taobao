@@ -5,7 +5,7 @@
 package item
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 查询B商家被授权品牌列表、类目列表和 c 商家新品类目列表 */
@@ -44,8 +44,7 @@ type ItemcatsAuthorizeGetResponseResult struct {
 }
 
 /* 获取后台供卖家发布商品的标准商品类目。
-<br/>1. 增量获取类目数据可用<a href="http://api.taobao.com/apidoc/api.htm?path=cid:3-apiId:11072">taobao.itemcats.increment.get</a>接口。
-<br/>2. 全量获取类目数据可用<a href="http://api.taobao.com/apidoc/api.htm?path=cid:3-apiId:11078">taobao.topats.itemcats.get</a>接口。 */
+<br/>全量获取类目数据可用<a href="http://api.taobao.com/apidoc/api.htm?path=cid:3-apiId:11078">taobao.topats.itemcats.get</a>接口。 */
 type ItemcatsGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -75,59 +74,24 @@ func (r *ItemcatsGetRequest) GetResponse(accessToken string) (*ItemcatsGetRespon
 }
 
 type ItemcatsGetResponse struct {
-	ItemCats     []*ItemCat `json:"item_cats"`
-	LastModified string     `json:"last_modified"`
+	ItemCats struct {
+		ItemCat []*ItemCat `json:"item_cat"`
+	}                   `json:"item_cats"`
+	LastModified string `json:"last_modified"`
 }
 
 type ItemcatsGetResponseResult struct {
 	Response *ItemcatsGetResponse `json:"itemcats_get_response"`
 }
 
-/* 增量获取后台类目、类目属性、类目属性值数据
-<br/>1. 每天7点左右会产生今天的增量数据，在7点之前获取增量类目数据将会报错，在7点之后获取增量类目数据可以实时返回。
-<br/>2. 最长可以获取最近7天的增量类目数据，如果超过7天没有同步类目数据，建议走<a href="http://api.taobao.com/apidoc/api.htm?path=cid:3-apiId:11078">全量类目</a>接口获取。
-<br/>3. 在增量接口的基础上，建议5天做一次全量同步最新数据，防止数据丢失 */
-type ItemcatsIncrementGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 一级类目ID列表，用半角逗号(,)分隔，例如:"16,19562"，一次最多可以获取10个类目的增量数据。 */
-func (r *ItemcatsIncrementGetRequest) SetCids(value string) {
-	r.SetValue("cids", value)
-}
-
-/* 要获取最近哪一天的增量类目数据，可选值为：1~7。默认值为1，表示获取昨天发生变更的类目数据。 */
-func (r *ItemcatsIncrementGetRequest) SetDays(value string) {
-	r.SetValue("days", value)
-}
-
-/* 获取类目的类型：1代表集市、2代表天猫 */
-func (r *ItemcatsIncrementGetRequest) SetType(value string) {
-	r.SetValue("type", value)
-}
-
-func (r *ItemcatsIncrementGetRequest) GetResponse(accessToken string) (*ItemcatsIncrementGetResponse, []byte, error) {
-	var resp ItemcatsIncrementGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.itemcats.increment.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type ItemcatsIncrementGetResponse struct {
-	ItemCats   []*ItemCat   `json:"item_cats"`
-	ItemProps  []*ItemProp  `json:"item_props"`
-	PropValues []*PropValue `json:"prop_values"`
-}
-
-type ItemcatsIncrementGetResponseResult struct {
-	Response *ItemcatsIncrementGetResponse `json:"itemcats_increment_get_response"`
-}
-
 /* 通过设置必要的参数，来获取商品后台标准类目属性，以及这些属性里面详细的属性值prop_values。 */
 type ItempropsGetRequest struct {
 	open_taobao.TaobaoMethodRequest
+}
+
+/* 属性的Key，支持多条，以“,”分隔 */
+func (r *ItempropsGetRequest) SetAttrKeys(value string) {
+	r.SetValue("attr_keys", value)
 }
 
 /* 类目子属性路径,由该子属性上层的类目属性和类目属性值组成,格式pid:vid;pid:vid.取类目子属性需要传child_path,cid */
@@ -200,8 +164,10 @@ func (r *ItempropsGetRequest) GetResponse(accessToken string) (*ItempropsGetResp
 }
 
 type ItempropsGetResponse struct {
-	ItemProps    []*ItemProp `json:"item_props"`
-	LastModified string      `json:"last_modified"`
+	ItemProps struct {
+		ItemProp []*ItemProp `json:"item_prop"`
+	}                   `json:"item_props"`
+	LastModified string `json:"last_modified"`
 }
 
 type ItempropsGetResponseResult struct {
@@ -250,52 +216,12 @@ func (r *ItempropvaluesGetRequest) GetResponse(accessToken string) (*Itempropval
 }
 
 type ItempropvaluesGetResponse struct {
-	LastModified string       `json:"last_modified"`
-	PropValues   []*PropValue `json:"prop_values"`
+	LastModified string `json:"last_modified"`
+	PropValues   struct {
+		PropValue []*PropValue `json:"prop_value"`
+	} `json:"prop_values"`
 }
 
 type ItempropvaluesGetResponseResult struct {
 	Response *ItempropvaluesGetResponse `json:"itempropvalues_get_response"`
-}
-
-/* 全量获取后台类目、类目属性、类目属性值数据
-<br/>异步API使用方法，请查看：<a href="http://open.taobao.com/doc/detail.htm?id=30">异步API使用说明</a>
-<br/>1. 每天8点左右会产生今天的全量数据，在8点之前提交获取全量类目数据任务需要等到8点之后才完成，在8点之后提交获取全量类目数据任务可以接近实时返回。
-<br/>2. 提交任务后，通过taobao.topats.result.get来查看任务执行状态，如果任务已完成，则返回下载URL
-<br/>3. 如果订阅了主动通知服务，任务完成后TOP会通过HTTP长连接推送消息，通知的消息格式请参考异步API使用文档
-<br/>4. 下载到的结果是zip压缩包，解压后得到一个标准的csv/json格式的文本文件，文件内容的默认编码格式是UTF-8 */
-type TopatsItemcatsGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 一级类目ID列表（非一级类目将会被忽略），用半角逗号(,)分隔，例如:"16,19562"，一次最多可以获取10个类目的增量数据。<span style="color:red">注：传入0代表获取所有类目的数据,默认获取所有类目数据</span> */
-func (r *TopatsItemcatsGetRequest) SetCids(value string) {
-	r.SetValue("cids", value)
-}
-
-/* 类目数据输出格式，可选值为：csv, json（默认csv格式返回） */
-func (r *TopatsItemcatsGetRequest) SetOutputFormat(value string) {
-	r.SetValue("output_format", value)
-}
-
-/* 获取类目的类型：1代表集市、2代表天猫 */
-func (r *TopatsItemcatsGetRequest) SetType(value string) {
-	r.SetValue("type", value)
-}
-
-func (r *TopatsItemcatsGetRequest) GetResponse(accessToken string) (*TopatsItemcatsGetResponse, []byte, error) {
-	var resp TopatsItemcatsGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.topats.itemcats.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type TopatsItemcatsGetResponse struct {
-	Task *Task `json:"task"`
-}
-
-type TopatsItemcatsGetResponseResult struct {
-	Response *TopatsItemcatsGetResponse `json:"topats_itemcats_get_response"`
 }

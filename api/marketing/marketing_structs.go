@@ -4,12 +4,16 @@
 
 package marketing
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 优惠信息对象 */
 type PromotionDisplayTop struct {
-	PromotionInItem []*PromotionInItem `json:"promotion_in_item"`
-	PromotionInShop []*PromotionInShop `json:"promotion_in_shop"`
+	PromotionInItem struct {
+		PromotionInItem []*PromotionInItem `json:"promotion_in_item"`
+	}               `json:"promotion_in_item"`
+	PromotionInShop struct {
+		PromotionInShop []*PromotionInShop `json:"promotion_in_shop"`
+	} `json:"promotion_in_shop"`
 }
 
 /* 单品级优惠信息 */
@@ -46,14 +50,6 @@ type Promotion struct {
 	StartDate      string `json:"start_date"`
 	Status         string `json:"status"`
 	TagId          int    `json:"tag_id"`
-}
-
-/* 人群标签 */
-type UserTag struct {
-	CreateDate  string `json:"create_date"`
-	Description string `json:"description"`
-	TagId       int    `json:"tag_id"`
-	TagName     string `json:"tag_name"`
 }
 
 /* 活动数据结构 */

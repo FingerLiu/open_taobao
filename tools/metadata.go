@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"unicode"
 )
 
 type PropsT struct {
@@ -172,7 +173,7 @@ func NewMetadata(filename string, confPackage *ConfPackageT) (*DataT, error) {
 	// 按包获取 api 需要的 struct
 	for _, pkg := range confPackage.Mx {
 		apis := d.MapPkgApi[pkg.Name]
-		structs := d.MapPkgStruct[pkg.Name]
+		structs := make([]*StructT, 0)
 		okStruct := make(map[string]bool)
 		for _, api := range apis {
 			for _, para := range api.Response.Param {
@@ -250,7 +251,27 @@ func GetGoName(jsonName string) string {
 	return result
 }
 
+func GetTaobaoName(goName string) string {
+	result := ""
+	for i, c := range goName {
+		if unicode.IsUpper(c) {
+			if i == 0 {
+				result += strings.ToLower(goName[i : i+1])
+			} else {
+				result += "_" + strings.ToLower(goName[i:i+1])
+			}
+		} else {
+			result += goName[i : i+1]
+		}
+	}
+	return result
+}
+
 func GetGoType(TaobaoType, TaobaoLevel string) string {
+	if TaobaoLevel == "Object Array" {
+		return fmt.Sprintf("struct {%s []*%s `json:\"%s\"`}", TaobaoType, TaobaoType, GetTaobaoName(TaobaoType))
+	}
+
 	result := ""
 	if TaobaoLevel == "Basic Array" || TaobaoLevel == "Object Array" {
 		result = "[]"

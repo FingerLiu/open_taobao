@@ -5,7 +5,7 @@
 package shop
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 此API添加卖家店铺内自定义类目
@@ -72,7 +72,9 @@ func (r *SellercatsListGetRequest) GetResponse(accessToken string) (*SellercatsL
 }
 
 type SellercatsListGetResponse struct {
-	SellerCats []*SellerCat `json:"seller_cats"`
+	SellerCats struct {
+		SellerCat []*SellerCat `json:"seller_cat"`
+	} `json:"seller_cats"`
 }
 
 type SellercatsListGetResponseResult struct {
@@ -233,7 +235,9 @@ func (r *ShopcatsListGetRequest) GetResponse(accessToken string) (*ShopcatsListG
 }
 
 type ShopcatsListGetResponse struct {
-	ShopCats []*ShopCat `json:"shop_cats"`
+	ShopCats struct {
+		ShopCat []*ShopCat `json:"shop_cat"`
+	} `json:"shop_cats"`
 }
 
 type ShopcatsListGetResponseResult struct {

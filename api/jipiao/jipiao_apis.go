@@ -5,7 +5,7 @@
 package jipiao
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 产品批量添加,传入文件大小限制在1M(一般1w条记录不会超过1M),每五分钟只允许调用一次 */
@@ -616,7 +616,9 @@ func (r *TripJipiaoAgentOrderGetRequest) GetResponse(accessToken string) (*TripJ
 }
 
 type TripJipiaoAgentOrderGetResponse struct {
-	Orders []*AtOrder `json:"orders"`
+	Orders struct {
+		AtOrder []*AtOrder `json:"at_order"`
+	} `json:"orders"`
 }
 
 type TripJipiaoAgentOrderGetResponseResult struct {

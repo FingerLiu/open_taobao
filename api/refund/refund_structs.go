@@ -4,7 +4,7 @@
 
 package refund
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 退款结构 */
 type Refund struct {
@@ -51,15 +51,17 @@ type RefundRemindTimeout struct {
 
 /* 留言/凭证数据结构 */
 type RefundMessage struct {
-	Content     string    `json:"content"`
-	Created     string    `json:"created"`
-	Id          int       `json:"id"`
-	MessageType string    `json:"message_type"`
-	OwnerId     int       `json:"owner_id"`
-	OwnerNick   string    `json:"owner_nick"`
-	OwnerRole   string    `json:"owner_role"`
-	PicUrls     []*PicUrl `json:"pic_urls"`
-	RefundId    int       `json:"refund_id"`
+	Content     string `json:"content"`
+	Created     string `json:"created"`
+	Id          int    `json:"id"`
+	MessageType string `json:"message_type"`
+	OwnerId     int    `json:"owner_id"`
+	OwnerNick   string `json:"owner_nick"`
+	OwnerRole   string `json:"owner_role"`
+	PicUrls     struct {
+		PicUrl []*PicUrl `json:"pic_url"`
+	}            `json:"pic_urls"`
+	RefundId int `json:"refund_id"`
 }
 
 /* 图片链接 */
@@ -69,14 +71,16 @@ type PicUrl struct {
 
 /* 批量异步任务结果 */
 type Task struct {
-	CheckCode   string     `json:"check_code"`
-	Created     string     `json:"created"`
-	DownloadUrl string     `json:"download_url"`
-	Method      string     `json:"method"`
-	Schedule    string     `json:"schedule"`
-	Status      string     `json:"status"`
-	Subtasks    []*Subtask `json:"subtasks"`
-	TaskId      int        `json:"task_id"`
+	CheckCode   string `json:"check_code"`
+	Created     string `json:"created"`
+	DownloadUrl string `json:"download_url"`
+	Method      string `json:"method"`
+	Schedule    string `json:"schedule"`
+	Status      string `json:"status"`
+	Subtasks    struct {
+		Subtask []*Subtask `json:"subtask"`
+	}          `json:"subtasks"`
+	TaskId int `json:"task_id"`
 }
 
 /* 批量异步任务的子任务结果 */

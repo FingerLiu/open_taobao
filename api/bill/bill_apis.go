@@ -5,7 +5,7 @@
 package bill
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 查询费用账户信息 */
@@ -33,8 +33,10 @@ func (r *BillAccountsGetRequest) GetResponse(accessToken string) (*BillAccountsG
 }
 
 type BillAccountsGetResponse struct {
-	Accounts     []*Account `json:"accounts"`
-	TotalResults int        `json:"total_results"`
+	Accounts struct {
+		Account []*Account `json:"account"`
+	}                `json:"accounts"`
+	TotalResults int `json:"total_results"`
 }
 
 type BillAccountsGetResponseResult struct {
@@ -133,9 +135,11 @@ func (r *BillBillsGetRequest) GetResponse(accessToken string) (*BillBillsGetResp
 }
 
 type BillBillsGetResponse struct {
-	Bills        []*Bill `json:"bills"`
-	HasNext      bool    `json:"has_next"`
-	TotalResults int     `json:"total_results"`
+	Bills struct {
+		Bill []*Bill `json:"bill"`
+	}                 `json:"bills"`
+	HasNext      bool `json:"has_next"`
+	TotalResults int  `json:"total_results"`
 }
 
 type BillBillsGetResponseResult struct {
@@ -224,9 +228,11 @@ func (r *BillBookBillsGetRequest) GetResponse(accessToken string) (*BillBookBill
 }
 
 type BillBookBillsGetResponse struct {
-	Bills        []*BookBill `json:"bills"`
-	HasNext      bool        `json:"has_next"`
-	TotalResults int         `json:"total_results"`
+	Bills struct {
+		BookBill []*BookBill `json:"book_bill"`
+	}                 `json:"bills"`
+	HasNext      bool `json:"has_next"`
+	TotalResults int  `json:"total_results"`
 }
 
 type BillBookBillsGetResponseResult struct {

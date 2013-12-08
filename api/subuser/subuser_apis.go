@@ -5,7 +5,7 @@
 package subuser
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 给指定的卖家创建新的子账号角色<br/>
@@ -110,7 +110,9 @@ func (r *SellercenterRolemembersGetRequest) GetResponse(accessToken string) (*Se
 }
 
 type SellercenterRolemembersGetResponse struct {
-	Subusers []*SubUserInfo `json:"subusers"`
+	Subusers struct {
+		SubUserInfo []*SubUserInfo `json:"sub_user_info"`
+	} `json:"subusers"`
 }
 
 type SellercenterRolemembersGetResponseResult struct {
@@ -137,7 +139,9 @@ func (r *SellercenterRolesGetRequest) GetResponse(accessToken string) (*Sellerce
 }
 
 type SellercenterRolesGetResponse struct {
-	Roles []*Role `json:"roles"`
+	Roles struct {
+		Role []*Role `json:"role"`
+	} `json:"roles"`
 }
 
 type SellercenterRolesGetResponseResult struct {
@@ -191,7 +195,9 @@ func (r *SellercenterSubusersGetRequest) GetResponse(accessToken string) (*Selle
 }
 
 type SellercenterSubusersGetResponse struct {
-	Subusers []*SubUserInfo `json:"subusers"`
+	Subusers struct {
+		SubUserInfo []*SubUserInfo `json:"sub_user_info"`
+	} `json:"subusers"`
 }
 
 type SellercenterSubusersGetResponseResult struct {
@@ -218,7 +224,9 @@ func (r *SellercenterUserPermissionsGetRequest) GetResponse(accessToken string) 
 }
 
 type SellercenterUserPermissionsGetResponse struct {
-	Permissions []*Permission `json:"permissions"`
+	Permissions struct {
+		Permission []*Permission `json:"permission"`
+	} `json:"permissions"`
 }
 
 type SellercenterUserPermissionsGetResponseResult struct {
@@ -356,7 +364,9 @@ func (r *SubuserDepartmentsGetRequest) GetResponse(accessToken string) (*Subuser
 }
 
 type SubuserDepartmentsGetResponse struct {
-	Departments []*Department `json:"departments"`
+	Departments struct {
+		Department []*Department `json:"department"`
+	} `json:"departments"`
 }
 
 type SubuserDepartmentsGetResponseResult struct {
@@ -494,7 +504,9 @@ func (r *SubuserDutysGetRequest) GetResponse(accessToken string) (*SubuserDutysG
 }
 
 type SubuserDutysGetResponse struct {
-	Dutys []*Duty `json:"dutys"`
+	Dutys struct {
+		Duty []*Duty `json:"duty"`
+	} `json:"dutys"`
 }
 
 type SubuserDutysGetResponseResult struct {
@@ -784,7 +796,9 @@ func (r *SubusersGetRequest) GetResponse(accessToken string) (*SubusersGetRespon
 }
 
 type SubusersGetResponse struct {
-	Subaccounts []*SubAccountInfo `json:"subaccounts"`
+	Subaccounts struct {
+		SubAccountInfo []*SubAccountInfo `json:"sub_account_info"`
+	} `json:"subaccounts"`
 }
 
 type SubusersGetResponseResult struct {

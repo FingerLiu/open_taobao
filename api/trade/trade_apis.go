@@ -5,46 +5,8 @@
 package trade
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
-
-/* 提供异步批量获取订单详情功能<br/>
-异步API使用方法，请查看：<a href="http://open.taobao.com/doc/detail.htm?id=30">异步API使用说明</a><br/>
-1. 一次可以查询的订单数量为1~100笔，强烈建议一次请求尽可能多的订单<br/>
-2. 提交任务后会生成task_id，后继通过此task_id调用taobao.topats.result.get接口获取任务的结果<br/>
-3. 如果订阅了主动通知服务，任务完成后TOP会通过HTTP长连接推送消息，通知的消息格式请参考异步API使用文档<br/>
-4. 这个任务ID有效时间为2天，2天后任务被删除。<br/>
-5. 每个应用每天最多可以调用3万次，超过限制今天无法调用。 */
-type TopatsTradesFullinfoGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 可以返回taobao.trade.fullinfo.get允许的所有字段。 */
-func (r *TopatsTradesFullinfoGetRequest) SetFields(value string) {
-	r.SetValue("fields", value)
-}
-
-/* 交易订单号tid列表，多个tid之间用半角分号分隔。tid个数的取值范围是：1~100个。由于这个接口限制每个应用的调用量是3万次/天，所以强烈建议采用尽可能多的tid，以取到更多的交易数据。 */
-func (r *TopatsTradesFullinfoGetRequest) SetTids(value string) {
-	r.SetValue("tids", value)
-}
-
-func (r *TopatsTradesFullinfoGetRequest) GetResponse(accessToken string) (*TopatsTradesFullinfoGetResponse, []byte, error) {
-	var resp TopatsTradesFullinfoGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.topats.trades.fullinfo.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type TopatsTradesFullinfoGetResponse struct {
-	Task *Task `json:"task"`
-}
-
-type TopatsTradesFullinfoGetResponseResult struct {
-	Response *TopatsTradesFullinfoGetResponse `json:"topats_trades_fullinfo_get_response"`
-}
 
 /* 提供异步下载三个月已卖出的在线订单信息接口。<br/>
 异步API使用方法，请查看：<a href="http://open.taobao.com/doc/detail.htm?id=30">异步API使用说明</a><br/>
@@ -212,14 +174,13 @@ type TradeConfirmfeeGetResponseResult struct {
 <br/>1. 只有在交易成功的状态下才能取到交易佣金，其它状态下取到的都是零或空值
 <br/>2. 只有单笔订单的情况下Trade数据结构中才包含商品相关的信息
 <br/>3. 获取到的Order中的payment字段在单笔子订单时包含物流费用，多笔子订单时不包含物流费用
-<br/>4. 请按需获取字段，减少TOP系统的压力
-<br/>5. <span style="color:red">通过异步接口<a href="http://api.taobao.com/apidoc/api.htm?path=cid:5-apiId:10417">taobao.topats.trades.fullinfo.get</a>可以一次性获取多达100笔订单详情</span> */
+<br/>4. 请按需获取字段，减少TOP系统的压力 */
 type TradeFullinfoGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
 
 /* 1.Trade中可以指定返回的fields：seller_nick, buyer_nick, title, type, created, tid, seller_rate,buyer_flag, buyer_rate, status, payment, adjust_fee, post_fee, total_fee, pay_time, end_time, modified, consign_time, buyer_obtain_point_fee, point_fee, real_point_fee, received_payment, commission_fee, buyer_memo, seller_memo, alipay_no,alipay_id,buyer_message, pic_path, num_iid, num, price, buyer_alipay_no, receiver_name, receiver_state, receiver_city, receiver_district, receiver_address, receiver_zip, receiver_mobile, receiver_phone,seller_flag, seller_alipay_no, seller_mobile, seller_phone, seller_name, seller_email, available_confirm_fee, has_post_fee, timeout_action_time, snapshot_url, cod_fee, cod_status, shipping_type, trade_memo, is_3D,buyer_email,buyer_area, trade_from,is_lgtype,is_force_wlb,is_brand_sale,buyer_cod_fee,discount_fee,seller_cod_fee,express_agency_fee,invoice_name,service_orders,credit_cardfee,step_trade_status,step_paid_fee,mark_desc,has_yfx,yfx_fee,yfx_id,yfx_type,trade_source(注：当该授权用户为卖家时不能查看买家buyer_memo,buyer_flag),eticket_ext,send_time, is_daixiao,is_part_consign
-2.Order中可以指定返回fields：orders.title, orders.pic_path, orders.price, orders.num, orders.num_iid, orders.sku_id, orders.refund_status, orders.status, orders.oid, orders.total_fee, orders.payment, orders.discount_fee, orders.adjust_fee, orders.snapshot_url, orders.timeout_action_time，orders.sku_properties_name, orders.item_meal_name, orders.item_meal_id，item_memo,orders.buyer_rate, orders.seller_rate, orders.outer_iid, orders.outer_sku_id, orders.refund_id, orders.seller_type, orders.is_oversold,orders.end_time,orders.order_from,orders.consign_time,orders.shipping_type,orders.logistics_company,orders.invice_no, orders.is_daixiao
+2.Order中可以指定返回fields：orders.title, orders.pic_path, orders.price, orders.num, orders.num_iid, orders.sku_id, orders.refund_status, orders.status, orders.oid, orders.total_fee, orders.payment, orders.discount_fee, orders.adjust_fee, orders.snapshot_url, orders.timeout_action_time，orders.sku_properties_name, orders.item_meal_name, orders.item_meal_id,orders.buyer_rate, orders.seller_rate, orders.outer_iid, orders.outer_sku_id, orders.refund_id, orders.seller_type, orders.is_oversold,orders.end_time,orders.order_from,orders.consign_time,orders.shipping_type,orders.logistics_company,orders.invoice_no, orders.is_daixiao
 3.fields：orders（返回Order的所有内容）
 4.flelds：promotion_details(返回promotion_details所有内容，优惠详情),invoice_name(发票抬头) */
 func (r *TradeFullinfoGetRequest) SetFields(value string) {
@@ -575,8 +536,7 @@ type TradeSnapshotGetResponseResult struct {
 
 /* 搜索当前会话用户作为卖家已卖出的交易数据（只能获取到三个月以内的交易信息）
 <br/>1. 返回的数据结果是以订单的创建时间倒序排列的。
-<br/>2. 返回的数据结果只包含了订单的部分数据，可通过taobao.trade.fullinfo.get获取订单详情。
-<br/>3. <span style="color:red">通过异步接口<a href="http://api.taobao.com/apidoc/api.htm?path=cid:5-apiId:11117">taobao.topats.trades.sold.get</a>可以一次性获取卖家3个月内的订单详情数据。 */
+<br/>2. 返回的数据结果只包含了订单的部分数据，可通过taobao.trade.fullinfo.get获取订单详情。 */
 type TradesSoldGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -684,7 +644,7 @@ taohua(淘花网交易类型）
 waimai(外卖交易类型）
 nopaid（即时到帐/趣味猜交易类型）
 step (万人团) eticket(电子凭证)
-tmall_i18n（天猫国际）;
+tmall_i18n（天猫国际）;nopaid （无付款交易）cycle_purchase（周期购）insurance_plus（保险）finance（基金）
 注：guarantee_trade是一个组合查询条件，并不是一种交易类型，获取批量或单个订单中不会返回此种类型的订单。 */
 func (r *TradesSoldGetRequest) SetType(value string) {
 	r.SetValue("type", value)
@@ -705,9 +665,11 @@ func (r *TradesSoldGetRequest) GetResponse(accessToken string) (*TradesSoldGetRe
 }
 
 type TradesSoldGetResponse struct {
-	HasNext      bool     `json:"has_next"`
-	TotalResults int      `json:"total_results"`
-	Trades       []*Trade `json:"trades"`
+	HasNext      bool `json:"has_next"`
+	TotalResults int  `json:"total_results"`
+	Trades       struct {
+		Trade []*Trade `json:"trade"`
+	} `json:"trades"`
 }
 
 type TradesSoldGetResponseResult struct {
@@ -799,7 +761,7 @@ taohua(桃花网交易类型）
 waimai(外卖交易类型）
 nopaid（即时到帐/趣味猜交易类型）
  eticket(电子凭证)
-tmall_i18n（天猫国际）;
+tmall_i18n（天猫国际）;nopaid（无付款交易）cycle_purchase（周期购）insurance_plus（保险）finance（基金）
 注：guarantee_trade是一个组合查询条件，并不是一种交易类型，获取批量或单个订单中不会返回此种类型的订单。 */
 func (r *TradesSoldIncrementGetRequest) SetType(value string) {
 	r.SetValue("type", value)
@@ -820,9 +782,11 @@ func (r *TradesSoldIncrementGetRequest) GetResponse(accessToken string) (*Trades
 }
 
 type TradesSoldIncrementGetResponse struct {
-	HasNext      bool     `json:"has_next"`
-	TotalResults int      `json:"total_results"`
-	Trades       []*Trade `json:"trades"`
+	HasNext      bool `json:"has_next"`
+	TotalResults int  `json:"total_results"`
+	Trades       struct {
+		Trade []*Trade `json:"trade"`
+	} `json:"trades"`
 }
 
 type TradesSoldIncrementGetResponseResult struct {
@@ -907,9 +871,9 @@ super_market_trade(商超交易),
 super_market_cod_trade(商超货到付款交易)
 taohua(桃花网交易类型）
 waimai(外卖交易类型）
-nopaid（即时到帐/趣味猜交易类型）
+nopaid（无付款订单）
 eticket(电子凭证)
-tmall_i18n（天猫国际）。
+tmall_i18n（天猫国际）
 注：guarantee_trade是一个组合查询条件，并不是一种交易类型，获取批量或单个订单中不会返回此种类型的订单。 */
 func (r *TradesSoldIncrementvGetRequest) SetType(value string) {
 	r.SetValue("type", value)
@@ -930,9 +894,11 @@ func (r *TradesSoldIncrementvGetRequest) GetResponse(accessToken string) (*Trade
 }
 
 type TradesSoldIncrementvGetResponse struct {
-	HasNext      bool     `json:"has_next"`
-	TotalResults int      `json:"total_results"`
-	Trades       []*Trade `json:"trades"`
+	HasNext      bool `json:"has_next"`
+	TotalResults int  `json:"total_results"`
+	Trades       struct {
+		Trade []*Trade `json:"trade"`
+	} `json:"trades"`
 }
 
 type TradesSoldIncrementvGetResponseResult struct {

@@ -4,7 +4,7 @@
 
 package crm
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 卖家设置的等级优惠信息 */
 type GradePromotion struct {
@@ -86,16 +86,18 @@ type PageResult struct {
 
 /* 属性（指标）信息 */
 type AttributeVO struct {
-	ClazzType   int           `json:"clazz_type"`
-	Code        string        `json:"code"`
-	Description string        `json:"description"`
-	DocumentId  int           `json:"document_id"`
-	Id          int           `json:"id"`
-	ParamKeys   []*ParamKeyVO `json:"param_keys"`
-	Title       string        `json:"title"`
-	TopAccess   int           `json:"top_access"`
-	TypeId      int           `json:"type_id"`
-	Unit        string        `json:"unit"`
+	ClazzType   int    `json:"clazz_type"`
+	Code        string `json:"code"`
+	Description string `json:"description"`
+	DocumentId  int    `json:"document_id"`
+	Id          int    `json:"id"`
+	ParamKeys   struct {
+		ParamKeyVO []*ParamKeyVO `json:"param_key_v_o"`
+	}                `json:"param_keys"`
+	Title     string `json:"title"`
+	TopAccess int    `json:"top_access"`
+	TypeId    int    `json:"type_id"`
+	Unit      string `json:"unit"`
 }
 
 /* 属性必填参数的对象 */

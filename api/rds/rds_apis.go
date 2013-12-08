@@ -5,7 +5,7 @@
 package rds
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 在rds实例里创建数据库 */
@@ -97,7 +97,9 @@ func (r *RdsDbGetRequest) GetResponse(accessToken string) (*RdsDbGetResponse, []
 }
 
 type RdsDbGetResponse struct {
-	RdsDbInfos []*RdsDbInfo `json:"rds_db_infos"`
+	RdsDbInfos struct {
+		RdsDbInfo []*RdsDbInfo `json:"rds_db_info"`
+	} `json:"rds_db_infos"`
 }
 
 type RdsDbGetResponseResult struct {

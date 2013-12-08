@@ -5,7 +5,7 @@
 package wangwang
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 增加关键词，只支持json返回 */
@@ -94,9 +94,11 @@ func (r *WangwangAbstractGetwordlistRequest) GetResponse(accessToken string) (*W
 }
 
 type WangwangAbstractGetwordlistResponse struct {
-	ErrorMsg  string      `json:"error_msg"`
-	RetCode   int         `json:"ret_code"`
-	WordLists []*WordList `json:"word_lists"`
+	ErrorMsg  string `json:"error_msg"`
+	RetCode   int    `json:"ret_code"`
+	WordLists struct {
+		WordList []*WordList `json:"word_list"`
+	} `json:"word_lists"`
 }
 
 type WangwangAbstractGetwordlistResponseResult struct {
@@ -181,13 +183,15 @@ func (r *WangwangAbstractLogqueryRequest) GetResponse(accessToken string) (*Wang
 }
 
 type WangwangAbstractLogqueryResponse struct {
-	ErrorMsg string     `json:"error_msg"`
-	FromId   string     `json:"from_id"`
-	IsSliced int        `json:"is_sliced"`
-	MsgLists []*MsgList `json:"msg_lists"`
-	NextKey  string     `json:"next_key"`
-	RetCode  int        `json:"ret_code"`
-	ToId     string     `json:"to_id"`
+	ErrorMsg string `json:"error_msg"`
+	FromId   string `json:"from_id"`
+	IsSliced int    `json:"is_sliced"`
+	MsgLists struct {
+		MsgList []*MsgList `json:"msg_list"`
+	}              `json:"msg_lists"`
+	NextKey string `json:"next_key"`
+	RetCode int    `json:"ret_code"`
+	ToId    string `json:"to_id"`
 }
 
 type WangwangAbstractLogqueryResponseResult struct {
@@ -232,7 +236,9 @@ func (r *WangwangEserviceAvgwaittimeGetRequest) GetResponse(accessToken string) 
 }
 
 type WangwangEserviceAvgwaittimeGetResponse struct {
-	WaitingTimeListOnDays []*WaitingTimesOnDay `json:"waiting_time_list_on_days"`
+	WaitingTimeListOnDays struct {
+		WaitingTimesOnDay []*WaitingTimesOnDay `json:"waiting_times_on_day"`
+	} `json:"waiting_time_list_on_days"`
 }
 
 type WangwangEserviceAvgwaittimeGetResponseResult struct {
@@ -274,9 +280,11 @@ func (r *WangwangEserviceChatpeersGetRequest) GetResponse(accessToken string) (*
 }
 
 type WangwangEserviceChatpeersGetResponse struct {
-	Chatpeers []*Chatpeer `json:"chatpeers"`
-	Count     int         `json:"count"`
-	Ret       int         `json:"ret"`
+	Chatpeers struct {
+		Chatpeer []*Chatpeer `json:"chatpeer"`
+	}         `json:"chatpeers"`
+	Count int `json:"count"`
+	Ret   int `json:"ret"`
 }
 
 type WangwangEserviceChatpeersGetResponseResult struct {
@@ -316,9 +324,11 @@ func (r *WangwangEserviceEvalsGetRequest) GetResponse(accessToken string) (*Wang
 }
 
 type WangwangEserviceEvalsGetResponse struct {
-	ResultCode       int           `json:"result_code"`
-	ResultCount      int           `json:"result_count"`
-	StaffEvalDetails []*EvalDetail `json:"staff_eval_details"`
+	ResultCode       int `json:"result_code"`
+	ResultCount      int `json:"result_count"`
+	StaffEvalDetails struct {
+		EvalDetail []*EvalDetail `json:"eval_detail"`
+	} `json:"staff_eval_details"`
 }
 
 type WangwangEserviceEvalsGetResponseResult struct {
@@ -365,7 +375,9 @@ func (r *WangwangEserviceEvaluationGetRequest) GetResponse(accessToken string) (
 }
 
 type WangwangEserviceEvaluationGetResponse struct {
-	StaffEvalStatOnDays []*StaffEvalStatOnDay `json:"staff_eval_stat_on_days"`
+	StaffEvalStatOnDays struct {
+		StaffEvalStatOnDay []*StaffEvalStatOnDay `json:"staff_eval_stat_on_day"`
+	} `json:"staff_eval_stat_on_days"`
 }
 
 type WangwangEserviceEvaluationGetResponseResult struct {
@@ -385,7 +397,7 @@ type WangwangEserviceGroupmemberGetRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
 
-/* 被查询用户组管理员ID：cntaobao+淘宝nick，例如cntaobaotest */
+/* 主帐号ID：cntaobao+淘宝nick，例如cntaobaotest */
 func (r *WangwangEserviceGroupmemberGetRequest) SetManagerId(value string) {
 	r.SetValue("manager_id", value)
 }
@@ -400,7 +412,9 @@ func (r *WangwangEserviceGroupmemberGetRequest) GetResponse(accessToken string) 
 }
 
 type WangwangEserviceGroupmemberGetResponse struct {
-	GroupMemberList []*GroupMember `json:"group_member_list"`
+	GroupMemberList struct {
+		GroupMember []*GroupMember `json:"group_member"`
+	} `json:"group_member_list"`
 }
 
 type WangwangEserviceGroupmemberGetResponseResult struct {
@@ -441,9 +455,11 @@ func (r *WangwangEserviceLoginlogsGetRequest) GetResponse(accessToken string) (*
 }
 
 type WangwangEserviceLoginlogsGetResponse struct {
-	Count     int         `json:"count"`
-	Loginlogs []*LoginLog `json:"loginlogs"`
-	UserId    string      `json:"user_id"`
+	Count     int `json:"count"`
+	Loginlogs struct {
+		LoginLog []*LoginLog `json:"login_log"`
+	}             `json:"loginlogs"`
+	UserId string `json:"user_id"`
 }
 
 type WangwangEserviceLoginlogsGetResponseResult struct {
@@ -490,7 +506,9 @@ func (r *WangwangEserviceNoreplynumGetRequest) GetResponse(accessToken string) (
 }
 
 type WangwangEserviceNoreplynumGetResponse struct {
-	NonReplyStatOnDays []*NonReplyStatOnDay `json:"non_reply_stat_on_days"`
+	NonReplyStatOnDays struct {
+		NonReplyStatOnDay []*NonReplyStatOnDay `json:"non_reply_stat_on_day"`
+	} `json:"non_reply_stat_on_days"`
 }
 
 type WangwangEserviceNoreplynumGetResponseResult struct {
@@ -539,7 +557,9 @@ func (r *WangwangEserviceOnlinetimeGetRequest) GetResponse(accessToken string) (
 }
 
 type WangwangEserviceOnlinetimeGetResponse struct {
-	OnlineTimesListOnDays []*OnlineTimesOnDay `json:"online_times_list_on_days"`
+	OnlineTimesListOnDays struct {
+		OnlineTimesOnDay []*OnlineTimesOnDay `json:"online_times_on_day"`
+	} `json:"online_times_list_on_days"`
 }
 
 type WangwangEserviceOnlinetimeGetResponseResult struct {
@@ -589,7 +609,9 @@ func (r *WangwangEserviceReceivenumGetRequest) GetResponse(accessToken string) (
 }
 
 type WangwangEserviceReceivenumGetResponse struct {
-	ReplyStatListOnDays []*ReplyStatOnDay `json:"reply_stat_list_on_days"`
+	ReplyStatListOnDays struct {
+		ReplyStatOnDay []*ReplyStatOnDay `json:"reply_stat_on_day"`
+	} `json:"reply_stat_list_on_days"`
 }
 
 type WangwangEserviceReceivenumGetResponseResult struct {
@@ -611,10 +633,12 @@ func (r *WangwangEserviceStreamweigthsGetRequest) GetResponse(accessToken string
 }
 
 type WangwangEserviceStreamweigthsGetResponse struct {
-	ResultCode         int             `json:"result_code"`
-	ResultCount        int             `json:"result_count"`
-	StaffStreamWeights []*StreamWeight `json:"staff_stream_weights"`
-	TotalWeight        int             `json:"total_weight"`
+	ResultCode         int `json:"result_code"`
+	ResultCount        int `json:"result_count"`
+	StaffStreamWeights struct {
+		StreamWeight []*StreamWeight `json:"stream_weight"`
+	}               `json:"staff_stream_weights"`
+	TotalWeight int `json:"total_weight"`
 }
 
 type WangwangEserviceStreamweigthsGetResponseResult struct {

@@ -4,18 +4,14 @@
 
 package bill
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 费用科目 */
 type Account struct {
-	AccountCode  string `json:"account_code"`
-	AccountId    int    `json:"account_id"`
-	AccountName  string `json:"account_name"`
-	AccountType  int    `json:"account_type"`
-	GmtCreate    string `json:"gmt_create"`
-	GmtModified  string `json:"gmt_modified"`
-	RelatedOrder int    `json:"related_order"`
-	Status       int    `json:"status"`
+	AccountCode string `json:"account_code"`
+	AccountId   int    `json:"account_id"`
+	AccountName string `json:"account_name"`
+	AccountType int    `json:"account_type"`
 }
 
 /* 账单结构 */

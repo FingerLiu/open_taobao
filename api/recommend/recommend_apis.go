@@ -5,7 +5,7 @@
 package recommend
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 根据类目信息推荐相关联的宝贝集 */
@@ -43,7 +43,9 @@ func (r *CategoryrecommendItemsGetRequest) GetResponse(accessToken string) (*Cat
 }
 
 type CategoryrecommendItemsGetResponse struct {
-	FavoriteItems []*FavoriteItem `json:"favorite_items"`
+	FavoriteItems struct {
+		FavoriteItem []*FavoriteItem `json:"favorite_item"`
+	} `json:"favorite_items"`
 }
 
 type CategoryrecommendItemsGetResponseResult struct {
@@ -85,7 +87,9 @@ func (r *ItemrecommendItemsGetRequest) GetResponse(accessToken string) (*Itemrec
 }
 
 type ItemrecommendItemsGetResponse struct {
-	Values []*FavoriteItem `json:"values"`
+	Values struct {
+		FavoriteItem []*FavoriteItem `json:"favorite_item"`
+	} `json:"values"`
 }
 
 type ItemrecommendItemsGetResponseResult struct {
@@ -129,7 +133,9 @@ func (r *ShoprecommendItemsGetRequest) GetResponse(accessToken string) (*Shoprec
 }
 
 type ShoprecommendItemsGetResponse struct {
-	FavoriteItems []*FavoriteItem `json:"favorite_items"`
+	FavoriteItems struct {
+		FavoriteItem []*FavoriteItem `json:"favorite_item"`
+	} `json:"favorite_items"`
 }
 
 type ShoprecommendItemsGetResponseResult struct {
@@ -171,7 +177,9 @@ func (r *ShoprecommendShopsGetRequest) GetResponse(accessToken string) (*Shoprec
 }
 
 type ShoprecommendShopsGetResponse struct {
-	FavoriteShops []*FavoriteShop `json:"favorite_shops"`
+	FavoriteShops struct {
+		FavoriteShop []*FavoriteShop `json:"favorite_shop"`
+	} `json:"favorite_shops"`
 }
 
 type ShoprecommendShopsGetResponseResult struct {
@@ -209,7 +217,9 @@ func (r *UserrecommendItemsGetRequest) GetResponse(accessToken string) (*Userrec
 }
 
 type UserrecommendItemsGetResponse struct {
-	FavoriteItems []*FavoriteItem `json:"favorite_items"`
+	FavoriteItems struct {
+		FavoriteItem []*FavoriteItem `json:"favorite_item"`
+	} `json:"favorite_items"`
 }
 
 type UserrecommendItemsGetResponseResult struct {

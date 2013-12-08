@@ -5,7 +5,7 @@
 package hotel
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 此接口用于新增一个酒店，酒店的发布者是当前会话的用户。
@@ -220,7 +220,7 @@ type HotelImageUploadResponseResult struct {
 	Response *HotelImageUploadResponse `json:"hotel_image_upload_response"`
 }
 
-/* 用于回传hotel匹配结果 */
+/* 用于回传hotel匹配结果(该接口即将废除请勿使用) */
 type HotelMatchFeedbackRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -313,7 +313,7 @@ type HotelNameGetResponseResult struct {
 	Response *HotelNameGetResponse `json:"hotel_name_get_response"`
 }
 
-/* 下单结果回传 */
+/* 下单结果回传(该接口即将废除请勿使用) */
 type HotelOrderBookingFeedbackRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -499,7 +499,7 @@ type HotelOrderGetResponseResult struct {
 	Response *HotelOrderGetResponse `json:"hotel_order_get_response"`
 }
 
-/* 支付确认结果回传 */
+/* 支付确认结果回传(该接口即将废除请勿使用) */
 type HotelOrderPayFeedbackRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -553,7 +553,7 @@ type HotelOrderPayFeedbackResponseResult struct {
 	Response *HotelOrderPayFeedbackResponse `json:"hotel_order_pay_feedback_response"`
 }
 
-/* 退订处理结果回传 */
+/* 退订处理结果回传(该接口即将废除请勿使用) */
 type HotelOrderRefundFeedbackRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -698,8 +698,10 @@ func (r *HotelOrdersSearchRequest) GetResponse(accessToken string) (*HotelOrders
 }
 
 type HotelOrdersSearchResponse struct {
-	HotelOrders  []*HotelOrder `json:"hotel_orders"`
-	TotalResults int           `json:"total_results"`
+	HotelOrders struct {
+		HotelOrder []*HotelOrder `json:"hotel_order"`
+	}                `json:"hotel_orders"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelOrdersSearchResponseResult struct {
@@ -998,7 +1000,7 @@ type HotelRoomImgUploadResponseResult struct {
 	Response *HotelRoomImgUploadResponse `json:"hotel_room_img_upload_response"`
 }
 
-/* 接入方房态查询结果返回 */
+/* 接入方房态查询结果返回(该接口即将废除请勿使用) */
 type HotelRoomQuotasQueryFeedbackRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
@@ -1288,8 +1290,10 @@ func (r *HotelRoomsSearchRequest) GetResponse(accessToken string) (*HotelRoomsSe
 }
 
 type HotelRoomsSearchResponse struct {
-	Rooms        []*Room `json:"rooms"`
-	TotalResults int     `json:"total_results"`
+	Rooms struct {
+		Room []*Room `json:"room"`
+	}                `json:"rooms"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelRoomsSearchResponseResult struct {
@@ -1372,9 +1376,11 @@ func (r *HotelSoldHotelsIncrementGetRequest) GetResponse(accessToken string) (*H
 }
 
 type HotelSoldHotelsIncrementGetResponse struct {
-	HasNext      bool     `json:"has_next"`
-	Hotels       []*Hotel `json:"hotels"`
-	TotalResults int      `json:"total_results"`
+	HasNext bool `json:"has_next"`
+	Hotels  struct {
+		Hotel []*Hotel `json:"hotel"`
+	}                `json:"hotels"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelSoldHotelsIncrementGetResponseResult struct {
@@ -1438,9 +1444,11 @@ func (r *HotelSoldOrdersIncrementGetRequest) GetResponse(accessToken string) (*H
 }
 
 type HotelSoldOrdersIncrementGetResponse struct {
-	HasNext      bool          `json:"has_next"`
-	HotelOrders  []*HotelOrder `json:"hotel_orders"`
-	TotalResults int           `json:"total_results"`
+	HasNext     bool `json:"has_next"`
+	HotelOrders struct {
+		HotelOrder []*HotelOrder `json:"hotel_order"`
+	}                `json:"hotel_orders"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelSoldOrdersIncrementGetResponseResult struct {
@@ -1489,9 +1497,11 @@ func (r *HotelSoldTypesIncrementGetRequest) GetResponse(accessToken string) (*Ho
 }
 
 type HotelSoldTypesIncrementGetResponse struct {
-	HasNext      bool        `json:"has_next"`
-	RoomTypes    []*RoomType `json:"room_types"`
-	TotalResults int         `json:"total_results"`
+	HasNext   bool `json:"has_next"`
+	RoomTypes struct {
+		RoomType []*RoomType `json:"room_type"`
+	}                `json:"room_types"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelSoldTypesIncrementGetResponseResult struct {
@@ -1741,8 +1751,10 @@ func (r *HotelsSearchRequest) GetResponse(accessToken string) (*HotelsSearchResp
 }
 
 type HotelsSearchResponse struct {
-	Hotels       []*Hotel `json:"hotels"`
-	TotalResults int      `json:"total_results"`
+	Hotels struct {
+		Hotel []*Hotel `json:"hotel"`
+	}                `json:"hotels"`
+	TotalResults int `json:"total_results"`
 }
 
 type HotelsSearchResponseResult struct {

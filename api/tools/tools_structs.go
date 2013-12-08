@@ -4,7 +4,7 @@
 
 package tools
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* KFC 关键词过滤匹配结果 */
 type KfcSearchResult struct {
@@ -15,14 +15,16 @@ type KfcSearchResult struct {
 
 /* 批量异步任务结果 */
 type Task struct {
-	CheckCode   string     `json:"check_code"`
-	Created     string     `json:"created"`
-	DownloadUrl string     `json:"download_url"`
-	Method      string     `json:"method"`
-	Schedule    string     `json:"schedule"`
-	Status      string     `json:"status"`
-	Subtasks    []*Subtask `json:"subtasks"`
-	TaskId      int        `json:"task_id"`
+	CheckCode   string `json:"check_code"`
+	Created     string `json:"created"`
+	DownloadUrl string `json:"download_url"`
+	Method      string `json:"method"`
+	Schedule    string `json:"schedule"`
+	Status      string `json:"status"`
+	Subtasks    struct {
+		Subtask []*Subtask `json:"subtask"`
+	}          `json:"subtasks"`
+	TaskId int `json:"task_id"`
 }
 
 /* 批量异步任务的子任务结果 */

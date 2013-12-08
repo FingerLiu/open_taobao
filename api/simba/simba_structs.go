@@ -4,7 +4,7 @@
 
 package simba
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* 推广组 */
 type ADGroup struct {
@@ -40,10 +40,12 @@ type ADGroupCatmatch struct {
 
 /* 一页ADGroupCatMatch列表 */
 type ADGroupCatMatchPage struct {
-	AdgroupCatmatchList []*ADGroupCatmatch `json:"adgroup_catmatch_list"`
-	PageNo              int                `json:"page_no"`
-	PageSize            int                `json:"page_size"`
-	TotalItem           int                `json:"total_item"`
+	AdgroupCatmatchList struct {
+		ADGroupCatmatch []*ADGroupCatmatch `json:"a_d_group_catmatch"`
+	}             `json:"adgroup_catmatch_list"`
+	PageNo    int `json:"page_no"`
+	PageSize  int `json:"page_size"`
+	TotalItem int `json:"total_item"`
 }
 
 /* 类目出价预估信息 */
@@ -58,12 +60,14 @@ type ADGroupCatMatchForecast struct {
 
 /* 直通车商品分页对象 */
 type SubwayItemPartition struct {
-	ItemList   []*SubwayItem `json:"item_list"`
-	OrderBy    bool          `json:"order_by"`
-	OrderField string        `json:"order_field"`
-	PageNo     int           `json:"page_no"`
-	PageSize   int           `json:"page_size"`
-	TotalItem  int           `json:"total_item"`
+	ItemList struct {
+		SubwayItem []*SubwayItem `json:"subway_item"`
+	}                 `json:"item_list"`
+	OrderBy    bool   `json:"order_by"`
+	OrderField string `json:"order_field"`
+	PageNo     int    `json:"page_no"`
+	PageSize   int    `json:"page_size"`
+	TotalItem  int    `json:"total_item"`
 }
 
 /* 主站商品对象 */
@@ -83,10 +87,12 @@ type ExtraAttributes struct {
 
 /* 一页ADGroup列表 */
 type ADGroupPage struct {
-	AdgroupList []*ADGroup `json:"adgroup_list"`
-	PageNo      int        `json:"page_no"`
-	PageSize    int        `json:"page_size"`
-	TotalItem   int        `json:"total_item"`
+	AdgroupList struct {
+		ADGroup []*ADGroup `json:"a_d_group"`
+	}             `json:"adgroup_list"`
+	PageNo    int `json:"page_no"`
+	PageSize  int `json:"page_size"`
+	TotalItem int `json:"total_item"`
 }
 
 /* 推广计划 */
@@ -189,27 +195,36 @@ type CreativeRecord struct {
 
 /* 广告创意分页对象 */
 type CreativePage struct {
-	CreativeList []*Creative `json:"creative_list"`
-	PageNo       int         `json:"page_no"`
-	PageSize     int         `json:"page_size"`
-	TotalItem    int         `json:"total_item"`
+	CreativeList struct {
+		Creative []*Creative `json:"creative"`
+	}             `json:"creative_list"`
+	PageNo    int `json:"page_no"`
+	PageSize  int `json:"page_size"`
+	TotalItem int `json:"total_item"`
 }
 
 /* 类目对象 */
 type INCategoryTop struct {
-	CategoryChildTopList   []*INCategoryChildTop   `json:"category_child_top_list"`
-	CategoryDesc           string                  `json:"category_desc"`
-	CategoryId             int                     `json:"category_id"`
-	CategoryName           string                  `json:"category_name"`
-	CategoryPropertiesList []*INCategoryProperties `json:"category_properties_list"`
+	CategoryChildTopList struct {
+		INCategoryChildTop []*INCategoryChildTop `json:"i_n_category_child_top"`
+	}                             `json:"category_child_top_list"`
+	CategoryDesc           string `json:"category_desc"`
+	CategoryId             int    `json:"category_id"`
+	CategoryName           string `json:"category_name"`
+	CategoryPropertiesList struct {
+		INCategoryProperties []*INCategoryProperties `json:"i_n_category_properties"`
+	}                   `json:"category_properties_list"`
+	CategroyWord string `json:"categroy_word"`
 }
 
 /* 类目对象 */
 type INCategoryChildTop struct {
-	CategoryDesc           string                  `json:"category_desc"`
-	CategoryId             int                     `json:"category_id"`
-	CategoryName           string                  `json:"category_name"`
-	CategoryPropertiesList []*INCategoryProperties `json:"category_properties_list"`
+	CategoryDesc           string `json:"category_desc"`
+	CategoryId             int    `json:"category_id"`
+	CategoryName           string `json:"category_name"`
+	CategoryPropertiesList struct {
+		INCategoryProperties []*INCategoryProperties `json:"i_n_category_properties"`
+	} `json:"category_properties_list"`
 }
 
 /* 类目属性对象 */
@@ -230,10 +245,12 @@ type INCategoryAnalysis struct {
 
 /* 类目基础数据对象 */
 type INCategoryBase struct {
-	CategoryId       int             `json:"category_id"`
-	CategoryName     string          `json:"category_name"`
-	CategoryPv       int             `json:"category_pv"`
-	InRecordBaseList []*INRecordBase `json:"in_record_base_list"`
+	CategoryId       int    `json:"category_id"`
+	CategoryName     string `json:"category_name"`
+	CategoryPv       int    `json:"category_pv"`
+	InRecordBaseList struct {
+		INRecordBase []*INRecordBase `json:"i_n_record_base"`
+	} `json:"in_record_base_list"`
 }
 
 /* 词基础数据对象 */
@@ -256,8 +273,10 @@ type INWordAnalysis struct {
 
 /* 词基础数据对象 */
 type INWordBase struct {
-	InRecordBaseList []*INRecordBase `json:"in_record_base_list"`
-	Word             string          `json:"word"`
+	InRecordBaseList struct {
+		INRecordBase []*INRecordBase `json:"i_n_record_base"`
+	}           `json:"in_record_base_list"`
+	Word string `json:"word"`
 }
 
 /* 词和类目数据对象 */
@@ -284,10 +303,12 @@ type KeywordForecast struct {
 
 /* 关键词分页对象 */
 type KeywordPage struct {
-	KeywordList []*Keyword `json:"keyword_list"`
-	PageNo      int        `json:"page_no"`
-	PageSize    int        `json:"page_size"`
-	TotalItem   int        `json:"total_item"`
+	KeywordList struct {
+		Keyword []*Keyword `json:"keyword"`
+	}             `json:"keyword_list"`
+	PageNo    int `json:"page_no"`
+	PageSize  int `json:"page_size"`
+	TotalItem int `json:"total_item"`
 }
 
 /* 关键词 */
@@ -320,10 +341,12 @@ type KeywordQscore struct {
 
 /* 一页推荐词列表 */
 type RecommendWordPage struct {
-	PageNo            int              `json:"page_no"`
-	PageSize          int              `json:"page_size"`
-	RecommendWordList []*RecommendWord `json:"recommend_word_list"`
-	TotalItem         int              `json:"total_item"`
+	PageNo            int `json:"page_no"`
+	PageSize          int `json:"page_size"`
+	RecommendWordList struct {
+		RecommendWord []*RecommendWord `json:"recommend_word"`
+	}             `json:"recommend_word_list"`
+	TotalItem int `json:"total_item"`
 }
 
 /* 推荐词 */
@@ -336,8 +359,10 @@ type RecommendWord struct {
 
 /* 质量得分类 */
 type Qscore struct {
-	CatmatchQscore    string           `json:"catmatch_qscore"`
-	KeywordQscoreList []*KeywordQscore `json:"keyword_qscore_list"`
+	CatmatchQscore    string `json:"catmatch_qscore"`
+	KeywordQscoreList struct {
+		KeywordQscore []*KeywordQscore `json:"keyword_qscore"`
+	} `json:"keyword_qscore_list"`
 }
 
 /* 推广组与定向推广位置关系 */
@@ -393,14 +418,16 @@ type RankedItem struct {
 
 /* 批量异步任务结果 */
 type Task struct {
-	CheckCode   string     `json:"check_code"`
-	Created     string     `json:"created"`
-	DownloadUrl string     `json:"download_url"`
-	Method      string     `json:"method"`
-	Schedule    string     `json:"schedule"`
-	Status      string     `json:"status"`
-	Subtasks    []*Subtask `json:"subtasks"`
-	TaskId      int        `json:"task_id"`
+	CheckCode   string `json:"check_code"`
+	Created     string `json:"created"`
+	DownloadUrl string `json:"download_url"`
+	Method      string `json:"method"`
+	Schedule    string `json:"schedule"`
+	Status      string `json:"status"`
+	Subtasks    struct {
+		Subtask []*Subtask `json:"subtask"`
+	}          `json:"subtasks"`
+	TaskId int `json:"task_id"`
 }
 
 /* 批量异步任务的子任务结果 */

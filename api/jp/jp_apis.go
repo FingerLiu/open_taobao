@@ -5,7 +5,7 @@
 package jp
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 导购效果SPM报表查询，可查询某天某站点某频道某页面为淘宝带来的流量及成交情况（对于page和module最多返回10000条数据，请正确使用spm数据）
@@ -112,16 +112,24 @@ func (r *TmallItemsDiscountSearchRequest) GetResponse(accessToken string) (*Tmal
 }
 
 type TmallItemsDiscountSearchResponse struct {
-	BrandList    []*TmallBrand      `json:"brand_list"`
-	CatList      []*TmallCat        `json:"cat_list"`
-	ItemList     []*TmallSearchItem `json:"item_list"`
-	MinisiteList []*TmallMinisite   `json:"minisite_list"`
-	Page         int                `json:"page"`
-	PageSize     int                `json:"page_size"`
-	ParamValue   string             `json:"param_value"`
-	SearchUrl    string             `json:"search_url"`
-	TotalPage    int                `json:"total_page"`
-	TotalResults string             `json:"total_results"`
+	BrandList struct {
+		TmallBrand []*TmallBrand `json:"tmall_brand"`
+	}       `json:"brand_list"`
+	CatList struct {
+		TmallCat []*TmallCat `json:"tmall_cat"`
+	}        `json:"cat_list"`
+	ItemList struct {
+		TmallSearchItem []*TmallSearchItem `json:"tmall_search_item"`
+	}            `json:"item_list"`
+	MinisiteList struct {
+		TmallMinisite []*TmallMinisite `json:"tmall_minisite"`
+	}                   `json:"minisite_list"`
+	Page         int    `json:"page"`
+	PageSize     int    `json:"page_size"`
+	ParamValue   string `json:"param_value"`
+	SearchUrl    string `json:"search_url"`
+	TotalPage    int    `json:"total_page"`
+	TotalResults string `json:"total_results"`
 }
 
 type TmallItemsDiscountSearchResponseResult struct {
@@ -148,7 +156,9 @@ func (r *TmallSelectedItemsSearchRequest) GetResponse(accessToken string) (*Tmal
 }
 
 type TmallSelectedItemsSearchResponse struct {
-	ItemList []*SelectedItem `json:"item_list"`
+	ItemList struct {
+		SelectedItem []*SelectedItem `json:"selected_item"`
+	} `json:"item_list"`
 }
 
 type TmallSelectedItemsSearchResponseResult struct {
@@ -189,11 +199,13 @@ func (r *TmallTemaiItemsSearchRequest) GetResponse(accessToken string) (*TmallTe
 }
 
 type TmallTemaiItemsSearchResponse struct {
-	ItemList     []*TmallSearchTmItem `json:"item_list"`
-	Page         int                  `json:"page"`
-	PageSize     int                  `json:"page_size"`
-	TotalPage    int                  `json:"total_page"`
-	TotalResults int                  `json:"total_results"`
+	ItemList struct {
+		TmallSearchTmItem []*TmallSearchTmItem `json:"tmall_search_tm_item"`
+	}                `json:"item_list"`
+	Page         int `json:"page"`
+	PageSize     int `json:"page_size"`
+	TotalPage    int `json:"total_page"`
+	TotalResults int `json:"total_results"`
 }
 
 type TmallTemaiItemsSearchResponseResult struct {
@@ -220,7 +232,9 @@ func (r *TmallTemaiSubcatsSearchRequest) GetResponse(accessToken string) (*Tmall
 }
 
 type TmallTemaiSubcatsSearchResponse struct {
-	CatList []*TmallTmCat `json:"cat_list"`
+	CatList struct {
+		TmallTmCat []*TmallTmCat `json:"tmall_tm_cat"`
+	} `json:"cat_list"`
 }
 
 type TmallTemaiSubcatsSearchResponseResult struct {

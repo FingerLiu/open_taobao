@@ -4,25 +4,33 @@
 
 package widget
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* Widget获取到的商品信息 */
 type WidgetItem struct {
-	AddToCart         bool               `json:"add_to_cart"`
-	ApproveStatus     string             `json:"approve_status"`
-	ClickUrl          string             `json:"click_url"`
-	IsMall            bool               `json:"is_mall"`
-	ItemId            int                `json:"item_id"`
-	ItemPics          []string           `json:"item_pics"`
-	ItemPromotionData []*PromotionInItem `json:"item_promotion_data"`
-	PicUrl            string             `json:"pic_url"`
-	Price             string             `json:"price"`
-	Quantity          int                `json:"quantity"`
-	SellerNick        string             `json:"seller_nick"`
-	ShopPromotionData []*PromotionInShop `json:"shop_promotion_data"`
-	SkuProps          []*WidgetSkuProps  `json:"sku_props"`
-	Skus              []*WidgetSku       `json:"skus"`
-	Title             string             `json:"title"`
+	AddToCart         bool     `json:"add_to_cart"`
+	ApproveStatus     string   `json:"approve_status"`
+	ClickUrl          string   `json:"click_url"`
+	IsMall            bool     `json:"is_mall"`
+	ItemId            int      `json:"item_id"`
+	ItemPics          []string `json:"item_pics"`
+	ItemPromotionData struct {
+		PromotionInItem []*PromotionInItem `json:"promotion_in_item"`
+	}                        `json:"item_promotion_data"`
+	PicUrl            string `json:"pic_url"`
+	Price             string `json:"price"`
+	Quantity          int    `json:"quantity"`
+	SellerNick        string `json:"seller_nick"`
+	ShopPromotionData struct {
+		PromotionInShop []*PromotionInShop `json:"promotion_in_shop"`
+	}        `json:"shop_promotion_data"`
+	SkuProps struct {
+		WidgetSkuProps []*WidgetSkuProps `json:"widget_sku_props"`
+	}    `json:"sku_props"`
+	Skus struct {
+		WidgetSku []*WidgetSku `json:"widget_sku"`
+	}            `json:"skus"`
+	Title string `json:"title"`
 }
 
 /* 单品级优惠信息 */

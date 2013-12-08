@@ -5,7 +5,7 @@
 package alipy
 
 import (
-	"github.com/changkong/open_taobao"
+	"github.com/yaofangou/open_taobao"
 )
 
 /* 创建生活账单 */
@@ -772,8 +772,10 @@ func (r *AlipayUserAccountFreezeGetRequest) GetResponse(accessToken string) (*Al
 }
 
 type AlipayUserAccountFreezeGetResponse struct {
-	FreezeItems  []*AccountFreeze `json:"freeze_items"`
-	TotalResults string           `json:"total_results"`
+	FreezeItems struct {
+		AccountFreeze []*AccountFreeze `json:"account_freeze"`
+	}                   `json:"freeze_items"`
+	TotalResults string `json:"total_results"`
 }
 
 type AlipayUserAccountFreezeGetResponseResult struct {
@@ -921,9 +923,11 @@ func (r *AlipayUserTradeSearchRequest) GetResponse(accessToken string) (*AlipayU
 }
 
 type AlipayUserTradeSearchResponse struct {
-	TotalPages   string         `json:"total_pages"`
-	TotalResults string         `json:"total_results"`
-	TradeRecords []*TradeRecord `json:"trade_records"`
+	TotalPages   string `json:"total_pages"`
+	TotalResults string `json:"total_results"`
+	TradeRecords struct {
+		TradeRecord []*TradeRecord `json:"trade_record"`
+	} `json:"trade_records"`
 }
 
 type AlipayUserTradeSearchResponseResult struct {

@@ -4,15 +4,19 @@
 
 package jp
 
-const VersionNo = "20130808"
+const VersionNo = "20131207"
 
 /* Appkey的站点导购数据 */
 type SpmResult struct {
-	AppKey     string    `json:"app_key"`
-	Date       string    `json:"date"`
-	SpmModules []*TopSpm `json:"spm_modules"`
-	SpmPages   []*TopSpm `json:"spm_pages"`
-	SpmSite    *TopSpm   `json:"spm_site"`
+	AppKey     string `json:"app_key"`
+	Date       string `json:"date"`
+	SpmModules struct {
+		TopSpm []*TopSpm `json:"top_spm"`
+	}        `json:"spm_modules"`
+	SpmPages struct {
+		TopSpm []*TopSpm `json:"top_spm"`
+	}               `json:"spm_pages"`
+	SpmSite *TopSpm `json:"spm_site"`
 }
 
 /* 提供查询APPKey为淘宝带来成交以及流量 */
