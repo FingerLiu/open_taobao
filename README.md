@@ -3,6 +3,7 @@ open_taobao
 
 淘宝开放平台的 go 语言 SDK, MIT许可。 
 自带web小工具: 可测试基本流程, 可根据 ApiMetadata.xml 重新生成SDK源码并编译, 保持与淘宝同步
+只保留了自己生成的电子码商相关接口，其他请参考源项目 https://github.com/yaofangou/open_taobao
 
 版本说明
 ========

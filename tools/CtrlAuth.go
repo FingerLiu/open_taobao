@@ -6,7 +6,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/yaofangou/open_taobao"
+	"github.com/FingerLiu/open_taobao"
 	"net/http"
 	"strings"
 )
@@ -59,11 +59,6 @@ func (c *CtrlAuth) save(w http.ResponseWriter, r *http.Request) {
 
 // 返回 true 代表执行完后，需要恢复转向到 /auth
 func (c *CtrlAuth) do(w http.ResponseWriter, r *http.Request) bool {
-	err := c.GetConfMain().CheckPara()
-	if err != nil {
-		c.SetErr(err.Error())
-		return true
-	}
 	url_, err := open_taobao.GetUrlForAuth(
 		c.GetConfMain().AppKey, c.GetConfMain().RedirectUri, "")
 	if err != nil {

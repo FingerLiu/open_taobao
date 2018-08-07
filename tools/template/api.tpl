@@ -5,7 +5,7 @@
 package {{.PkgName}}
 
 import (
-	"github.com/yaofangou/open_taobao"
+	"github.com/FingerLiu/open_taobao"
 )
 
 {{range .Apis}}

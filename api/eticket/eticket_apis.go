@@ -8,236 +8,203 @@ import (
 	"github.com/FingerLiu/open_taobao"
 )
 
+/* 码商重发电子凭证回调接口 */
+type EticketMerchantMaResendRequest struct {
+	open_taobao.TaobaoMethodRequest
+}
+
+/* 业务类型 */
+func (r *EticketMerchantMaResendRequest) SetBizType(value string) {
+	r.SetValue("biz_type", value)
+}
+
+/* 待重发的码列表 */
+func (r *EticketMerchantMaResendRequest) SetIsvMaList(value string) {
+	r.SetValue("isv_ma_list", value)
+}
+
+/* 业务id（订单号） */
+func (r *EticketMerchantMaResendRequest) SetOuterId(value string) {
+	r.SetValue("outer_id", value)
+}
+
+/* 需要跟发码通知获取到的参数一致 */
+func (r *EticketMerchantMaResendRequest) SetToken(value string) {
+	r.SetValue("token", value)
+}
+
+func (r *EticketMerchantMaResendRequest) GetResponse(accessToken string) (*EticketMerchantMaResendResponse, []byte, error) {
+	var resp EticketMerchantMaResendResponseResult
+	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.eticket.merchant.ma.resend", &resp)
+	if err != nil {
+		return nil, data, err
+	}
+	return resp.Response, data, err
+}
+
+type EticketMerchantMaResendResponse struct {
+	RespBody *SendMaCallbackResp `json:"resp_body"`
+	RetCode  string              `json:"ret_code"`
+	RetMsg   string              `json:"ret_msg"`
+}
+
+type EticketMerchantMaResendResponseResult struct {
+	Response *EticketMerchantMaResendResponse `json:"eticket_merchant_ma_resend_response"`
+}
+
+/* 电子凭证核销接口 */
+type EticketMerchantMaConsumeRequest struct {
+	open_taobao.TaobaoMethodRequest
+}
+
+/* 业务类型 */
+func (r *EticketMerchantMaConsumeRequest) SetBizType(value string) {
+	r.SetValue("biz_type", value)
+}
+
+/* 需要被核销的码 */
+func (r *EticketMerchantMaConsumeRequest) SetCode(value string) {
+	r.SetValue("code", value)
+}
+
+/* 核销份数 */
+func (r *EticketMerchantMaConsumeRequest) SetConsumeNum(value string) {
+	r.SetValue("consume_num", value)
+}
+
+/* 核销后换码的码列表 */
+func (r *EticketMerchantMaConsumeRequest) SetIsvMaList(value string) {
+	r.SetValue("isv_ma_list", value)
+}
+
+/* 业务id（订单号） */
+func (r *EticketMerchantMaConsumeRequest) SetOuterId(value string) {
+	r.SetValue("outer_id", value)
+}
+
+/* 机具编号 */
+func (r *EticketMerchantMaConsumeRequest) SetPosId(value string) {
+	r.SetValue("pos_id", value)
+}
+
+/* 核销序列号，需要保证唯一 */
+func (r *EticketMerchantMaConsumeRequest) SetSerialNum(value string) {
+	r.SetValue("serial_num", value)
+}
+
+/* 需要跟发码通知获取到的参数一致 */
+func (r *EticketMerchantMaConsumeRequest) SetToken(value string) {
+	r.SetValue("token", value)
+}
+
+func (r *EticketMerchantMaConsumeRequest) GetResponse(accessToken string) (*EticketMerchantMaConsumeResponse, []byte, error) {
+	var resp EticketMerchantMaConsumeResponseResult
+	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.eticket.merchant.ma.consume", &resp)
+	if err != nil {
+		return nil, data, err
+	}
+	return resp.Response, data, err
+}
+
+type EticketMerchantMaConsumeResponse struct {
+	RespBody *ConsumeMaCallbackResp `json:"resp_body"`
+	RetCode  string                 `json:"ret_code"`
+	RetMsg   string                 `json:"ret_msg"`
+}
+
+type EticketMerchantMaConsumeResponseResult struct {
+	Response *EticketMerchantMaConsumeResponse `json:"eticket_merchant_ma_consume_response"`
+}
+
 /* 码商发码成功回调接口 */
-type SendRequest struct {
+type EticketMerchantMaSendRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
 
-/* 卖家自定义类目名称。不超过20个字符 */
-func (r *SellercatsListAddRequest) SetName(value string) {
-	r.SetValue("name", value)
+/* 业务类型 */
+func (r *EticketMerchantMaSendRequest) SetBizType(value string) {
+	r.SetValue("biz_type", value)
 }
 
-/* 父类目编号，如果类目为店铺下的一级类目：值等于0，如果类目为子类目，调用获取taobao.sellercats.list.get父类目编号 */
-func (r *SellercatsListAddRequest) SetParentCid(value string) {
-	r.SetValue("parent_cid", value)
+/* 需要发送的码列表 */
+func (r *EticketMerchantMaSendRequest) SetIsvMaList(value string) {
+	r.SetValue("isv_ma_list", value)
 }
 
-/* 链接图片URL地址。(绝对地址，格式：http://host/image_path) */
-func (r *SellercatsListAddRequest) SetPictUrl(value string) {
-	r.SetValue("pict_url", value)
+/* 业务id（订单号） */
+func (r *EticketMerchantMaSendRequest) SetOuterId(value string) {
+	r.SetValue("outer_id", value)
 }
 
-/* 该类目在页面上的排序位置,取值范围:大于零的整数 */
-func (r *SellercatsListAddRequest) SetSortOrder(value string) {
-	r.SetValue("sort_order", value)
+/* 需要跟发码通知获取到的参数一致 */
+func (r *EticketMerchantMaSendRequest) SetToken(value string) {
+	r.SetValue("token", value)
 }
 
-func (r *SellercatsListAddRequest) GetResponse(accessToken string) (*SellercatsListAddResponse, []byte, error) {
-	var resp SellercatsListAddResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.sellercats.list.add", &resp)
+func (r *EticketMerchantMaSendRequest) GetResponse(accessToken string) (*EticketMerchantMaSendResponse, []byte, error) {
+	var resp EticketMerchantMaSendResponseResult
+	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.eticket.merchant.ma.send", &resp)
 	if err != nil {
 		return nil, data, err
 	}
 	return resp.Response, data, err
 }
 
-type SellercatsListAddResponse struct {
-	SellerCat *SellerCat `json:"seller_cat"`
+type EticketMerchantMaSendResponse struct {
+	RespBody *SendMaCallbackResp `json:"resp_body"`
+	RetCode  string              `json:"ret_code"`
+	RetMsg   string              `json:"ret_msg"`
 }
 
-type SellercatsListAddResponseResult struct {
-	Response *SellercatsListAddResponse `json:"sellercats_list_add_response"`
+type EticketMerchantMaSendResponseResult struct {
+	Response *EticketMerchantMaSendResponse `json:"eticket_merchant_ma_send_response"`
 }
 
-/* 此API获取当前卖家店铺在淘宝前端被展示的浏览导航类目（面向买家） */
-type SellercatsListGetRequest struct {
+/* 针对一次发码通知，码商无法完成发码，则可以通过此接口告知电子凭证 */
+type EticketMerchantMaFailsendRequest struct {
 	open_taobao.TaobaoMethodRequest
 }
 
-/* 卖家昵称 */
-func (r *SellercatsListGetRequest) SetNick(value string) {
-	r.SetValue("nick", value)
+/* 业务类型 */
+func (r *EticketMerchantMaFailsendRequest) SetBizType(value string) {
+	r.SetValue("biz_type", value)
 }
 
-func (r *SellercatsListGetRequest) GetResponse(accessToken string) (*SellercatsListGetResponse, []byte, error) {
-	var resp SellercatsListGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.sellercats.list.get", &resp)
+/* 业务id（订单号） */
+func (r *EticketMerchantMaFailsendRequest) SetOuterId(value string) {
+	r.SetValue("outer_id", value)
+}
+
+/* 错误原因码 */
+func (r *EticketMerchantMaFailsendRequest) SetSubCode(value string) {
+	r.SetValue("sub_code", value)
+}
+
+/* 错误码描述 */
+func (r *EticketMerchantMaFailsendRequest) SetSubMsg(value string) {
+	r.SetValue("sub_msg", value)
+}
+
+/* 需要与发码通知获取的值一致 */
+func (r *EticketMerchantMaFailsendRequest) SetToken(value string) {
+	r.SetValue("token", value)
+}
+
+func (r *EticketMerchantMaFailsendRequest) GetResponse(accessToken string) (*EticketMerchantMaFailsendResponse, []byte, error) {
+	var resp EticketMerchantMaFailsendResponseResult
+	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.eticket.merchant.ma.failsend", &resp)
 	if err != nil {
 		return nil, data, err
 	}
 	return resp.Response, data, err
 }
 
-type SellercatsListGetResponse struct {
-	SellerCats struct {
-		SellerCat []*SellerCat `json:"seller_cat"`
-	} `json:"seller_cats"`
+type EticketMerchantMaFailsendResponse struct {
+	RespBody *SendFailCallbackResp `json:"resp_body"`
+	RetCode  string                `json:"ret_code"`
+	RetMsg   string                `json:"ret_msg"`
 }
 
-type SellercatsListGetResponseResult struct {
-	Response *SellercatsListGetResponse `json:"sellercats_list_get_response"`
-}
-
-/* 此API更新卖家店铺内自定义类目
-注：因为缓存的关系，添加的新类目需8个小时后才可以在淘宝页面上正常显示，但是不影响在该类目下商品发布 */
-type SellercatsListUpdateRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 卖家自定义类目编号 */
-func (r *SellercatsListUpdateRequest) SetCid(value string) {
-	r.SetValue("cid", value)
-}
-
-/* 卖家自定义类目名称。不超过20个字符 */
-func (r *SellercatsListUpdateRequest) SetName(value string) {
-	r.SetValue("name", value)
-}
-
-/* 链接图片URL地址 */
-func (r *SellercatsListUpdateRequest) SetPictUrl(value string) {
-	r.SetValue("pict_url", value)
-}
-
-/* 该类目在页面上的排序位置,取值范围:大于零的整数 */
-func (r *SellercatsListUpdateRequest) SetSortOrder(value string) {
-	r.SetValue("sort_order", value)
-}
-
-func (r *SellercatsListUpdateRequest) GetResponse(accessToken string) (*SellercatsListUpdateResponse, []byte, error) {
-	var resp SellercatsListUpdateResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.sellercats.list.update", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type SellercatsListUpdateResponse struct {
-	SellerCat *SellerCat `json:"seller_cat"`
-}
-
-type SellercatsListUpdateResponseResult struct {
-	Response *SellercatsListUpdateResponse `json:"sellercats_list_update_response"`
-}
-
-/* 获取卖家店铺的基本信息 */
-type ShopGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 需返回的字段列表。可选值：Shop 结构中的所有字段；多个字段之间用逗号(,)分隔 */
-func (r *ShopGetRequest) SetFields(value string) {
-	r.SetValue("fields", value)
-}
-
-/* 卖家昵称 */
-func (r *ShopGetRequest) SetNick(value string) {
-	r.SetValue("nick", value)
-}
-
-func (r *ShopGetRequest) GetResponse(accessToken string) (*ShopGetResponse, []byte, error) {
-	var resp ShopGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.shop.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type ShopGetResponse struct {
-	Shop *Shop `json:"shop"`
-}
-
-type ShopGetResponseResult struct {
-	Response *ShopGetResponse `json:"shop_get_response"`
-}
-
-/* 获取卖家店铺剩余橱窗数量，已用橱窗数量，总橱窗数量 */
-type ShopRemainshowcaseGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-func (r *ShopRemainshowcaseGetRequest) GetResponse(accessToken string) (*ShopRemainshowcaseGetResponse, []byte, error) {
-	var resp ShopRemainshowcaseGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.shop.remainshowcase.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type ShopRemainshowcaseGetResponse struct {
-	Shop *Shop `json:"shop"`
-}
-
-type ShopRemainshowcaseGetResponseResult struct {
-	Response *ShopRemainshowcaseGetResponse `json:"shop_remainshowcase_get_response"`
-}
-
-/* 目前只支持标题、公告和描述的更新 */
-type ShopUpdateRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 店铺公告。不超过1024个字符 */
-func (r *ShopUpdateRequest) SetBulletin(value string) {
-	r.SetValue("bulletin", value)
-}
-
-/* 店铺描述。10～2000个字符以内 */
-func (r *ShopUpdateRequest) SetDesc(value string) {
-	r.SetValue("desc", value)
-}
-
-/* 店铺标题。不超过30个字符；过滤敏感词，如淘咖啡、阿里巴巴等。title, bulletin和desc至少必须传一个 */
-func (r *ShopUpdateRequest) SetTitle(value string) {
-	r.SetValue("title", value)
-}
-
-func (r *ShopUpdateRequest) GetResponse(accessToken string) (*ShopUpdateResponse, []byte, error) {
-	var resp ShopUpdateResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.shop.update", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type ShopUpdateResponse struct {
-	Shop *Shop `json:"shop"`
-}
-
-type ShopUpdateResponseResult struct {
-	Response *ShopUpdateResponse `json:"shop_update_response"`
-}
-
-/* 获取淘宝面向买家的浏览导航类目（跟后台卖家商品管理的类目有差异） */
-type ShopcatsListGetRequest struct {
-	open_taobao.TaobaoMethodRequest
-}
-
-/* 需要返回的字段列表，见ShopCat，默认返回：cid,parent_cid,name,is_parent */
-func (r *ShopcatsListGetRequest) SetFields(value string) {
-	r.SetValue("fields", value)
-}
-
-func (r *ShopcatsListGetRequest) GetResponse(accessToken string) (*ShopcatsListGetResponse, []byte, error) {
-	var resp ShopcatsListGetResponseResult
-	data, err := r.TaobaoMethodRequest.GetResponse(accessToken, "taobao.shopcats.list.get", &resp)
-	if err != nil {
-		return nil, data, err
-	}
-	return resp.Response, data, err
-}
-
-type ShopcatsListGetResponse struct {
-	ShopCats struct {
-		ShopCat []*ShopCat `json:"shop_cat"`
-	} `json:"shop_cats"`
-}
-
-type ShopcatsListGetResponseResult struct {
-	Response *ShopcatsListGetResponse `json:"shopcats_list_get_response"`
+type EticketMerchantMaFailsendResponseResult struct {
+	Response *EticketMerchantMaFailsendResponse `json:"eticket_merchant_ma_failsend_response"`
 }

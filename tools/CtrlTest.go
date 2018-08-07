@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/yaofangou/open_taobao/api/user"
+	"github.com/FingerLiu/open_taobao/api/user"
 	"net/http"
 	"strings"
 )
@@ -38,7 +38,9 @@ func (c *CtrlTest) Show(w http.ResponseWriter, r *http.Request) {
 func (c *CtrlTest) userBuyerGet(w http.ResponseWriter, r *http.Request) {
 	var req user.UserBuyerGetRequest
 	req.SetFields("user_id, nick")
+	fmt.Println("In userBuyerGet")
 	resp, data, err := req.GetResponse(c.GetConfMain().AccessToken)
+	fmt.Println(resp)
 	if err != nil {
 		c.SetErr(err.Error())
 		return

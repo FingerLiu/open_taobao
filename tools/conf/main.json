@@ -1,6 +1,6 @@
 {
-  "AppKey": "",
-  "AppSecret": "",
-  "AccessToken": "",
-  "RedirectUri": ""
+  "AppKey": "1024641246",
+  "AppSecret": "sandbox4527be414979344867b978c7d",
+  "AccessToken": "6201226a188a4d4c5766d8abd77e6cfca3ZZfdb9a3bbfa92074082786",
+  "RedirectUri": "http://jackstraw.sim-vpc-docker.luojilab.com/haulm/auth/callback/"
 }
