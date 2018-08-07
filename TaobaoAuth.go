@@ -96,3 +96,38 @@ func (t *TokenGetRequest) GetResponse() (*TokenGetResponse, []byte, error) {
 	data, err := executeRequest(t, resp, InsecureSkipVerify, DisableCompression)
 	return resp, data, err
 }
+
+type TokenRefreshRequest struct {
+	TaobaoRequest
+}
+
+func (t *TokenRefreshRequest) SetRefreshToken(val string) {
+	t.SetValue("refresh_token", val)
+}
+
+func (t *TokenRefreshRequest) GetResponse() (*TokenGetResponse, []byte, error) {
+	if t.GetValue("client_id") == "" {
+		return nil, nil, errors.New("[TokenGetRequest] AppKey is null")
+	}
+	if t.GetValue("client_secret") == "" {
+		return nil, nil, errors.New("[TokenGetRequest] AppSecret is null")
+	}
+	if t.GetValue("code") == "" {
+		return nil, nil, errors.New("[TokenGetRequest] Code is null")
+	}
+	if t.GetValue("redirect_uri") == "" {
+		return nil, nil, errors.New("[TokenGetRequest] RedirectUri is null")
+	}
+	if t.GetValue("refresh_token") == "" {
+		return nil, nil, errors.New("[TokenGetRequest] RefreshToken is null")
+	}
+
+	t.SetReqUrl("https://oauth.taobao.com/token")
+
+	t.SetValue("grant_type", "authorization_code")
+	t.SetValue("view", "web")
+
+	resp := new(TokenGetResponse)
+	data, err := executeRequest(t, resp, InsecureSkipVerify, DisableCompression)
+	return resp, data, err
+}
