@@ -7,6 +7,8 @@ package open_taobao
 import (
 	"errors"
 	"time"
+	"github.com/spf13/viper"
+	"fmt"
 )
 
 type TaobaoMethodRequest struct {
@@ -14,10 +16,15 @@ type TaobaoMethodRequest struct {
 }
 
 func (t *TaobaoMethodRequest) GetResponse(accessToken, apiMethodName string, resp interface{}) ([]byte, error) {
+	tbDomain := viper.GetString("TAOBAO_DOMAIN")
+	if len(tbDomain) == 0{
+		tbDomain = "tbsandbox.com"
+	}
 	if accessToken == "" {
 		return nil, errors.New("[" + apiMethodName + "] AccessToken is null")
 	}
-	t.SetReqUrl("https://eco.taobao.com/router/rest")
+	url := fmt.Sprintf("https://eco.%s/router/rest", tbDomain)
+	t.SetReqUrl(url)
 
 	t.SetValue("method", apiMethodName)
 	t.SetValue("format", "json")
@@ -27,7 +34,8 @@ func (t *TaobaoMethodRequest) GetResponse(accessToken, apiMethodName string, res
 		t.SetValue("timestamp", time.Now().Format("2006-01-02 15:04:05"))
 		t.SetValue("app_key", taobaoConfig.appKey)
 		t.SetValue("sign_method", "md5")
-		t.SetReqUrl("http://gw.api.taobao.com/router/rest")
+		reqUrl := fmt.Sprintf("http://gw.api.%s/router/rest", tbDomain)
+		t.SetReqUrl(reqUrl)
 
 		if taobaoConfig.requestUrl != "" {
 			t.SetReqUrl(taobaoConfig.requestUrl)

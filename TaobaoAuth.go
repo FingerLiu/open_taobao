@@ -7,6 +7,8 @@ package open_taobao
 import (
 	"errors"
 	"net/url"
+	"github.com/spf13/viper"
+	"fmt"
 )
 
 func GetUrlForAuth(appKey, redirectUri, state string) (*url.URL, error) {
@@ -16,8 +18,11 @@ func GetUrlForAuth(appKey, redirectUri, state string) (*url.URL, error) {
 	if redirectUri == "" {
 		return nil, errors.New("[GetUrlForAuth] RedirectUri is null")
 	}
-
-	u, err := url.Parse("https://oauth.taobao.com/authorize")
+	tbDomain := viper.GetString("TAOBAO_DOMAIN")
+	if len(tbDomain) == 0{
+		tbDomain = "tbsandbox.com"
+	}
+	u, err := url.Parse(fmt.Sprintf("https://oauth.%s/authorize", tbDomain))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +92,11 @@ func (t *TokenGetRequest) GetResponse() (*TokenGetResponse, []byte, error) {
 		return nil, nil, errors.New("[TokenGetRequest] RedirectUri is null")
 	}
 
-	t.SetReqUrl("https://oauth.taobao.com/token")
+	tbDomain := viper.GetString("TAOBAO_DOMAIN")
+	if len(tbDomain) == 0{
+		tbDomain = "tbsandbox.com"
+	}
+	t.SetReqUrl(fmt.Sprintf("https://oauth.%s/token", tbDomain))
 
 	t.SetValue("grant_type", "authorization_code")
 	t.SetValue("view", "web")
@@ -121,10 +130,13 @@ func (t *TokenRefreshRequest) GetResponse() (*TokenGetResponse, []byte, error) {
 	if t.GetValue("refresh_token") == "" {
 		return nil, nil, errors.New("[TokenGetRequest] RefreshToken is null")
 	}
+	tbDomain := viper.GetString("TAOBAO_DOMAIN")
+	if len(tbDomain) == 0{
+		tbDomain = "tbsandbox.com"
+	}
+	t.SetReqUrl(fmt.Sprintf("https://oauth.%s/token", tbDomain))
 
-	t.SetReqUrl("https://oauth.taobao.com/token")
-
-	t.SetValue("grant_type", "authorization_code")
+	t.SetValue("grant_type", "refresh_token")
 	t.SetValue("view", "web")
 
 	resp := new(TokenGetResponse)
