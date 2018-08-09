@@ -20,8 +20,9 @@ func (r *EticketMerchantMaResendRequest) SetBizType(value string) {
 }
 
 /* 待重发的码列表 */
-func (r *EticketMerchantMaResendRequest) SetIsvMaList(value string) {
-	r.SetValue("isv_ma_list", value)
+func (r *EticketMerchantMaResendRequest) SetIsvMaList(value []IsvMa) {
+	j, _ := json.Marshal(value)
+	r.SetValue("isv_ma_list", string(j))
 }
 
 /* 业务id（订单号） */
