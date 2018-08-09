@@ -20,3 +20,8 @@ type ConsumeMaCallbackResp struct {
 type SendFailCallbackResp struct {
 	AttributeMap `json:"attribute_map"`
 }
+
+type IsvMa struct {
+	Code 	string 	`json:"code"`
+	Num	 	int 	`json:"num"`
+}

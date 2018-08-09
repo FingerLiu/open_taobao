@@ -6,6 +6,7 @@ package eticket
 
 import (
 	"github.com/FingerLiu/open_taobao"
+	"encoding/json"
 )
 
 /* 码商重发电子凭证回调接口 */
@@ -127,8 +128,9 @@ func (r *EticketMerchantMaSendRequest) SetBizType(value string) {
 }
 
 /* 需要发送的码列表 */
-func (r *EticketMerchantMaSendRequest) SetIsvMaList(value string) {
-	r.SetValue("isv_ma_list", value)
+func (r *EticketMerchantMaSendRequest) SetIsvMaList(value []IsvMa) {
+	j, _ := json.Marshal(value)
+	r.SetValue("isv_ma_list", string(j))
 }
 
 /* 业务id（订单号） */
