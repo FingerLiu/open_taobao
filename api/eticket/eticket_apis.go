@@ -75,8 +75,9 @@ func (r *EticketMerchantMaConsumeRequest) SetConsumeNum(value string) {
 }
 
 /* 核销后换码的码列表 */
-func (r *EticketMerchantMaConsumeRequest) SetIsvMaList(value string) {
-	r.SetValue("isv_ma_list", value)
+func (r *EticketMerchantMaConsumeRequest) SetIsvMaList(value []IsvMa) {
+	j, _ := json.Marshal(value)
+	r.SetValue("isv_ma_list", string(j))
 }
 
 /* 业务id（订单号） */
