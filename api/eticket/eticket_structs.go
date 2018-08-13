@@ -8,17 +8,17 @@ const VersionNo = "20170816"
 
 /* 回复参数 */
 type SendMaCallbackResp struct {
-	AttributeMap `json:"attribute_map"`
+	AttributeMap string `json:"attribute_map"`
 }
 
 /* 回复结果 */
 type ConsumeMaCallbackResp struct {
-	AttributeMap `json:"attribute_map"`
+	AttributeMap string `json:"attribute_map"`
 }
 
 /* 回复参数 */
 type SendFailCallbackResp struct {
-	AttributeMap `json:"attribute_map"`
+	AttributeMap string `json:"attribute_map"`
 }
 
 type IsvMa struct {
