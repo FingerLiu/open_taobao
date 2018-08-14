@@ -9,8 +9,11 @@ import (
 )
 
 type ErrResponse struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code 		int    	`json:"code"`
+	Msg  		string 	`json:"msg"`
+	SubCode	 	string 	`json:"sub_code"`
+	SubMsg 		string	`json:sub_msg`
+	RequestId 	string	`json:request_id`
 }
 
 type TaobaoTopErrResponse struct {
