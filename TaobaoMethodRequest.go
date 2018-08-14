@@ -7,8 +7,9 @@ package open_taobao
 import (
 	"errors"
 	"time"
-	"github.com/spf13/viper"
 	"fmt"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 type TaobaoMethodRequest struct {
@@ -17,7 +18,7 @@ type TaobaoMethodRequest struct {
 
 func (t *TaobaoMethodRequest) GetResponse(accessToken, apiMethodName string, resp interface{}) ([]byte, error) {
 	tbDomain := viper.GetString("TAOBAO_DOMAIN")
-	if len(tbDomain) == 0{
+	if len(tbDomain) == 0 {
 		tbDomain = "tbsandbox.com"
 	}
 	if accessToken == "" {
@@ -43,6 +44,8 @@ func (t *TaobaoMethodRequest) GetResponse(accessToken, apiMethodName string, res
 	} else {
 		t.SetValue("access_token", accessToken)
 	}
+	log.Debug().Msgf("tmall reqUrl %s", t.GetReqUrl())
+	log.Debug().Msgf("tmall values %s", t.GetValues())
 
 	return executeRequest(t, resp, InsecureSkipVerify, DisableCompression)
 }

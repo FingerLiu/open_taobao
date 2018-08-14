@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"sort"
 	"strings"
+	"github.com/rs/zerolog/log"
 )
 
 const VersionNo = "0.0.1"
@@ -82,6 +83,7 @@ func executeRequest(req TaobaoRequestI, resp interface{}, insecureSkipVerify, di
 	body := strings.NewReader(req.GetValues().Encode())
 	req1, err := http.NewRequest("POST", req.GetReqUrl(), body)
 	if err != nil {
+		log.Error().Msg(err.Error())
 		return nil, err
 	}
 
