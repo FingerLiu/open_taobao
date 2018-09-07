@@ -52,7 +52,7 @@ func (t *TaobaoMethodRequest) GetResponse(accessToken, apiMethodName string, res
 	if debug == "true" || debug == "True" {
 		log.Info().Msg("fake tmall, not call tmall due to debug == true")
 		var res []byte
-		str := "{\"code\": \"isv.success-all\", \"msg\":\"成功\"}"
+		str := "{\"code\": \"isv.success-all\", \"msg\":\"成功\", \"debug\":\"true\"}"
 		res = []byte(str)
 		return res, nil
 	}
