@@ -5,6 +5,7 @@
 package open_taobao
 
 import (
+	"time"
 	"crypto/md5"
 	"crypto/tls"
 	"encoding/hex"
