@@ -94,7 +94,8 @@ func executeRequest(req TaobaoRequestI, resp interface{}, insecureSkipVerify, di
 		TLSClientConfig:    &tls.Config{InsecureSkipVerify: insecureSkipVerify},
 		DisableCompression: disableCompression,
 	}
-	client := &http.Client{Transport: tr}
+	timeout := time.Duration(5  * time.Second)
+	client := &http.Client{Transport: tr, Timeout: timeout}
 
 	resp1, err := client.Do(req1)
 	if err != nil {
